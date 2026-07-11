@@ -1,4 +1,17 @@
 {
-  "blocks": {},
+  "blocks": {
+    "GameStop": {
+      "last_notified": 0,
+      "since": 1783779808
+    },
+    "Pok\u00e9mon Center": {
+      "last_notified": 0,
+      "since": 1783779808
+    },
+    "Walmart": {
+      "last_notified": 0,
+      "since": 1783779783
+    }
+  },
   "listings": {}
 }
