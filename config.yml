@@ -1,0 +1,132 @@
+# Pokémon TCG preorder tracker configuration
+
+set:
+  name: "Pokémon TCG 30th Anniversary Celebrations"
+  # Broad query sent to each retailer's search; results are then matched
+  # against the per-product rules below.
+  search_query: "pokemon tcg 30th anniversary"
+  # Titles containing any of these never match anything
+  exclude: []
+
+# Every SKU expected in the set. The lineup below is PROVISIONAL (mirrors the
+# 25th-anniversary Celebrations lineup) until the official product list is
+# announced — rename/add/remove entries freely.
+#
+# Per product:
+#   alert:        push a phone notification when it becomes buyable
+#   purchase:     hand it to auto-checkout when it becomes buyable
+#                 (also requires the global auto_checkout switches + secrets)
+#   must_include: title-match groups — a listing matches this product if,
+#                 for every group, at least one alternative appears in title
+#   exclude:      extra reject-words for this product only
+#   max_price_usd: per-product spend cap for auto-checkout (falls back to
+#                  the global auto_checkout.max_price_usd)
+#   image:        artwork shown on the status page. Placeholder Celebrations
+#                 card art for now — paste real box-shot URLs when they exist.
+#   watch_urls:   direct product-page URLs per retailer (most reliable
+#                 check by far — add them the moment a listing page exists)
+products:
+  - id: elite-trainer-box
+    name: "Elite Trainer Box"
+    alert: true
+    purchase: false        # flip to true (plus global switches) to auto-buy
+    max_price_usd: 80
+    must_include: [["30th"], ["elite trainer box", "etb"]]
+    exclude: ["sleeve", "playmat", "binder"]
+    image: "https://images.pokemontcg.io/cel25/2_hires.png"
+    watch_urls: {}         # e.g. target: ["https://www.target.com/p/-/A-123"]
+
+  - id: ultra-premium-collection
+    name: "Ultra-Premium Collection"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["ultra-premium", "ultra premium"]]
+    image: "https://images.pokemontcg.io/cel25/4_hires.png"
+    watch_urls: {}
+
+  - id: premium-figure-collection
+    name: "Premium Figure Collection"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["figure collection"]]
+    image: "https://images.pokemontcg.io/cel25/5_hires.png"
+    watch_urls: {}
+
+  - id: collector-chest
+    name: "Collector Chest"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["collector chest", "collector's chest"]]
+    image: "https://images.pokemontcg.io/cel25/8_hires.png"
+    watch_urls: {}
+
+  - id: pin-collection
+    name: "Deluxe Pin Collection"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["pin collection"]]
+    image: "https://images.pokemontcg.io/cel25/11_hires.png"
+    watch_urls: {}
+
+  - id: mini-tin
+    name: "Mini Tin"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["mini tin"]]
+    image: "https://images.pokemontcg.io/cel25/15_hires.png"
+    watch_urls: {}
+
+  - id: poster-collection
+    name: "Poster Collection"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["poster collection"]]
+    image: "https://images.pokemontcg.io/cel25/17_hires.png"
+    watch_urls: {}
+
+  - id: booster-bundle
+    name: "Booster Bundle"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["booster bundle"]]
+    image: "https://images.pokemontcg.io/cel25/25_hires.png"
+    watch_urls: {}
+
+retailers:
+  target:
+    enabled: true
+  walmart:
+    enabled: true
+  bestbuy:
+    enabled: true
+    # Optional: official Best Buy API key (https://developer.bestbuy.com)
+    # makes this checker far more reliable. Set repo secret BESTBUY_API_KEY.
+  gamestop:
+    enabled: true
+  pokemoncenter:
+    enabled: true   # heavy bot protection; expect intermittent blocks
+  amazon:
+    enabled: true   # direct watch_urls only; search is not attempted
+
+notifications:
+  # The ntfy topic works like a password: anyone who knows it can read your
+  # alerts AND push fake ones to your phone. It is therefore deliberately NOT
+  # stored in the repo — set the NTFY_TOPIC repo secret (Settings → Secrets
+  # and variables → Actions) and subscribe to the same topic in the ntfy app.
+  # Without it, checks still run but notifications are skipped (logged).
+  ntfy_topic: ""
+  ntfy_server: "https://ntfy.sh"
+  # Send one daily heads-up if a retailer has been blocking us for 24h+
+  notify_on_persistent_block: true
+
+auto_checkout:
+  # Global master switch. A product is only auto-bought when BOTH its own
+  # purchase flag AND this switch are on, plus repo variable
+  # ENABLE_AUTO_CHECKOUT=true and per-retailer credential secrets.
+  enabled: false
+  # Safety gate: unless CONFIRM_PURCHASE=true is also set, checkout runs in
+  # dry-run mode — it logs in, adds to cart, walks to the review step, then
+  # STOPS before placing the order and pushes you a notification instead.
+  max_price_usd: 80    # fallback cap when a product has no max_price_usd
+  quantity: 1
+  retailers: ["pokemoncenter", "target"]

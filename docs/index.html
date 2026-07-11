@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>30th Celebrations — Stock Tracker</title>
+<!-- Pokeball favicon (inline SVG, no external asset needed) -->
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="white" stroke="black" stroke-width="6"/><path d="M4 50a46 46 0 0 1 92 0Z" fill="%23ee1515"/><rect x="4" y="46" width="92" height="8" fill="black"/><circle cx="50" cy="50" r="15" fill="white" stroke="black" stroke-width="6"/><circle cx="50" cy="50" r="6" fill="%23ddd"/></svg>'>
+<style>
+  :root {
+    --gold: #e8c469;
+    --gold-dim: #a98d3f;
+    --red: #ee1515;
+    --bg: #0d1020;
+    --panel: rgba(20, 24, 46, .84);
+    --panel-border: rgba(232, 196, 105, .25);
+    --text: #eef0fa;
+    --muted: #9aa0b8;
+    --ok: #4ade80;
+    --warn: #fbbf24;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+  }
+
+  /* ---- layered background: gradient + pokeball pattern + floating cards ---- */
+  .bg {
+    position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(238, 21, 21, .18), transparent 60%),
+      radial-gradient(1000px 700px at -10% 110%, rgba(232, 196, 105, .14), transparent 60%),
+      linear-gradient(180deg, #0d1020 0%, #131734 55%, #0d1020 100%);
+  }
+  .bg::after {
+    content: ""; position: absolute; inset: 0; opacity: .05;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="4"/><path d="M20 50h20m20 0h20" stroke="white" stroke-width="4"/><circle cx="50" cy="50" r="9" fill="none" stroke="white" stroke-width="4"/></svg>');
+  }
+  .cards-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+  .cards-bg img {
+    position: absolute; width: 180px; border-radius: 9px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.55);
+    opacity: .28; filter: saturate(.9);
+    animation: floaty 14s ease-in-out infinite;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0) rotate(var(--rot, -8deg)); }
+    50%      { transform: translateY(-22px) rotate(var(--rot, -8deg)); }
+  }
+  @media (max-width: 720px) { .cards-bg img { width: 110px; opacity: .18; } }
+
+  /* ---- layout ---- */
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 44px 20px 80px; }
+  header { text-align: center; margin-bottom: 40px; }
+  header .set-logo { max-width: 300px; width: 70%; filter: drop-shadow(0 8px 24px rgba(0,0,0,.6)); }
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    margin-top: 16px; letter-spacing: .02em;
+    background: linear-gradient(90deg, var(--gold), #fff2c9, var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  header p { color: var(--muted); margin-top: 10px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 8px 18px; border-radius: 999px;
+    border: 1px solid var(--panel-border); background: var(--panel); font-size: .93rem;
+  }
+  .pill .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ok);
+    box-shadow: 0 0 10px var(--ok); animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+
+  section h2 {
+    margin: 40px 0 16px; font-size: 1.25rem; color: var(--gold);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  /* ---- product catalog ---- */
+  .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+  .product {
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .product:hover { transform: translateY(-3px); border-color: var(--gold); }
+  .product .art {
+    height: 190px; display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(400px 160px at 50% 120%, rgba(232,196,105,.16), transparent 70%),
+      rgba(0,0,0,.28);
+    overflow: hidden;
+  }
+  .product .art img { max-height: 170px; max-width: 82%; border-radius: 8px;
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,.6)); }
+  .product .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .product h3 { font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    font-size: .74rem; letter-spacing: .04em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; border: 1px solid transparent;
+  }
+  .badge.on   { background: rgba(232,196,105,.14); border-color: var(--gold-dim); color: var(--gold); }
+  .badge.buy  { background: rgba(238,21,21,.16); border-color: rgba(238,21,21,.55); color: #ff8a8a; }
+  .badge.off  { background: rgba(255,255,255,.05); color: var(--muted); }
+  .statuses { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+  .statuses a {
+    display: flex; justify-content: space-between; gap: 10px;
+    font-size: .87rem; color: var(--muted); text-decoration: none;
+    padding: 6px 10px; border-radius: 8px; background: rgba(255,255,255,.04);
+  }
+  .statuses a:hover { background: rgba(255,255,255,.09); }
+  .statuses .st { white-space: nowrap; }
+  .statuses .st.live { color: var(--ok); font-weight: 700; }
+  .statuses .st.listed { color: var(--warn); font-weight: 600; }
+  .none { font-size: .87rem; color: var(--muted); font-style: italic; }
+
+  .how {
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 14px; padding: 22px 24px; line-height: 1.65; color: var(--muted);
+  }
+  .how strong { color: var(--text); }
+  .how code { background: rgba(255,255,255,.08); padding: 2px 7px; border-radius: 6px; font-size: .9em; color: var(--gold); }
+
+  footer { margin-top: 56px; text-align: center; color: var(--muted); font-size: .82rem; line-height: 1.7; }
+  footer a { color: var(--gold-dim); }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<!-- Floating card art from the Celebrations set (stand-in until 30th-anniversary
+     card images are published on images.pokemontcg.io — swap set id then). -->
+<div class="cards-bg" id="cardsBg"></div>
+
+<div class="wrap">
+  <header>
+    <img class="set-logo" alt=""
+         src="https://images.pokemontcg.io/cel25/logo.png"
+         onerror="this.style.display='none'">
+    <h1 id="setName">30th Celebrations — Stock Tracker</h1>
+    <p>Every product in the set, watched around the clock across six retailers.</p>
+    <span class="pill"><span class="dot"></span>Checks run every ~10 minutes via GitHub Actions</span>
+  </header>
+
+  <section>
+    <h2><img width="22" height="22" alt="" src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="white" stroke="black" stroke-width="6"/><path d="M4 50a46 46 0 0 1 92 0Z" fill="%23ee1515"/><rect x="4" y="46" width="92" height="8" fill="black"/><circle cx="50" cy="50" r="15" fill="white" stroke="black" stroke-width="6"/></svg>'>
+      Product lineup</h2>
+    <div class="catalog" id="catalog"><div class="none">Loading catalog…</div></div>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="how">
+      A scheduled job sweeps every retailer for all products above.
+      Products marked <strong>🔔 alerts</strong> push an <strong>urgent
+      notification</strong> to the phone via <code>ntfy</code> the moment they
+      become buyable; products marked <strong>🛒 auto-buy</strong> are
+      additionally handed to the (off-by-default) checkout automation.
+      Toggle either per product in <code>config.yml</code>. Status here
+      refreshes when the site redeploys; the pushes are instant.
+    </div>
+  </section>
+
+  <footer>
+    Personal project — not affiliated with or endorsed by Nintendo, Creatures,
+    Game Freak, or The Pokémon Company.<br>
+    Card artwork &copy; The Pokémon Company, displayed via
+    <a href="https://pokemontcg.io">pokemontcg.io</a>.
+  </footer>
+</div>
+
+<script>
+  const BALL = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="white" stroke="%23222" stroke-width="6"/><path d="M4 50a46 46 0 0 1 92 0Z" fill="%23ee1515"/><rect x="4" y="46" width="92" height="8" fill="%23222"/><circle cx="50" cy="50" r="15" fill="white" stroke="%23222" stroke-width="6"/></svg>';
+
+  // --- floating background card art (Celebrations set) ---
+  const CARDS = [1, 2, 4, 5, 8, 11, 15, 17, 21];
+  const bg = document.getElementById('cardsBg');
+  CARDS.forEach((n, i) => {
+    const img = new Image();
+    img.src = `https://images.pokemontcg.io/cel25/${n}.png`;
+    img.alt = '';
+    img.onerror = () => img.remove();          // broken art: vanish silently
+    const col = i % 3, row = Math.floor(i / 3);
+    img.style.left = `${[-3, 40, 84][col] + (row % 2 ? 5 : 0)}%`;
+    img.style.top = `${6 + row * 34 + (col === 1 ? 10 : 0)}%`;
+    img.style.setProperty('--rot', `${(i % 2 ? 1 : -1) * (5 + (i * 3) % 9)}deg`);
+    img.style.animationDelay = `${i * 1.3}s`;
+    bg.appendChild(img);
+  });
+
+  const RETAILER_SEARCH = {
+    'Pokémon Center': q => `https://www.pokemoncenter.com/search/${encodeURIComponent(q)}`,
+    'Target':         q => `https://www.target.com/s?searchTerm=${encodeURIComponent(q)}`,
+    'Walmart':        q => `https://www.walmart.com/search?q=${encodeURIComponent(q)}`,
+    'Best Buy':       q => `https://www.bestbuy.com/site/searchpage.jsp?st=${encodeURIComponent(q)}`,
+    'GameStop':       q => `https://www.gamestop.com/search/?q=${encodeURIComponent(q)}`,
+    'Amazon':         q => `https://www.amazon.com/s?k=${encodeURIComponent(q)}`,
+  };
+
+  // products.json + state.json are generated from config.yml / the tracker's
+  // state at deploy time.
+  Promise.all([
+    fetch('products.json').then(r => r.ok ? r.json() : []),
+    fetch('state.json').then(r => r.ok ? r.json() : null).catch(() => null),
+  ]).then(([products, state]) => {
+    const catalog = document.getElementById('catalog');
+    catalog.innerHTML = '';
+    const listings = (state && state.listings) || {};
+
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product';
+
+      const alertBadge = p.alert
+        ? '<span class="badge on">🔔 alerts on</span>'
+        : '<span class="badge off">alerts off</span>';
+      const buyBadge = p.purchase
+        ? '<span class="badge buy">🛒 auto-buy on</span>'
+        : '<span class="badge off">auto-buy off</span>';
+
+      // listings for this product, grouped: retailer -> best entry
+      const byRetailer = {};
+      for (const [key, info] of Object.entries(listings)) {
+        if (info.product !== p.id) continue;
+        const retailer = key.split('::')[0];
+        const url = key.split('::')[1] || '#';
+        const cur = byRetailer[retailer];
+        if (!cur || (info.in_stock && !cur.info.in_stock)) byRetailer[retailer] = { url, info };
+      }
+
+      let statusRows = Object.entries(byRetailer).map(([retailer, { url, info }]) => {
+        const cls = info.in_stock ? 'live' : 'listed';
+        const label = info.in_stock
+          ? `BUYABLE${info.price ? ' · ' + info.price : ''}`
+          : `listed · ${info.status || 'unavailable'}`;
+        return `<a href="${url}" target="_blank" rel="noopener">
+                  <span>${retailer}</span><span class="st ${cls}">${label}</span></a>`;
+      }).join('');
+
+      if (!statusRows) {
+        const q = `pokemon tcg 30th anniversary ${p.name}`;
+        statusRows = `<div class="none">No listings spotted yet — quick search:</div>` +
+          Object.entries(RETAILER_SEARCH).slice(0, 3).map(([r, fn]) =>
+            `<a href="${fn(q)}" target="_blank" rel="noopener">
+               <span>${r}</span><span class="st">search ↗</span></a>`).join('');
+      }
+
+      card.innerHTML = `
+        <div class="art"><img alt="" src="${p.image || BALL}"
+             onerror="this.src='${BALL}'; this.style.maxHeight='90px'"></div>
+        <div class="body">
+          <h3>${p.name}</h3>
+          <div class="badges">${alertBadge}${buyBadge}</div>
+          <div class="statuses">${statusRows}</div>
+        </div>`;
+      catalog.appendChild(card);
+    });
+
+    if (!products.length) {
+      catalog.innerHTML = '<div class="none">Catalog unavailable — products.json missing.</div>';
+    }
+  });
+</script>
+</body>
+</html>
