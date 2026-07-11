@@ -4,13 +4,14 @@ from .models import Hit
 
 
 def _post(cfg: dict, title: str, body: str, *, priority: str = "default",
-          tags: str = "", click: str = "") -> None:
+          tags: str = "", click: str = "") -> bool:
+    """Send a push; returns True only if ntfy accepted it."""
     notif = cfg["notifications"]
     topic = (notif.get("ntfy_topic") or "").strip()
     if not topic:
         print(f"[notify] SKIPPED — no ntfy topic configured "
               f"(set the NTFY_TOPIC repo secret): {title}")
-        return
+        return False
     url = f"{notif['ntfy_server'].rstrip('/')}/{topic}"
     headers = {"Title": title.encode("utf-8"), "Priority": priority}
     if tags:
@@ -21,6 +22,7 @@ def _post(cfg: dict, title: str, body: str, *, priority: str = "default",
         resp = requests.post(url, data=body.encode("utf-8"), headers=headers,
                              timeout=15)
         resp.raise_for_status()
+        return True
     except requests.RequestException as e:
         # Deliberately terse: exception text can contain the topic-bearing
         # URL, and these lines land in world-readable Actions logs once the
@@ -28,6 +30,7 @@ def _post(cfg: dict, title: str, body: str, *, priority: str = "default",
         status = getattr(getattr(e, "response", None), "status_code", None)
         print(f"[notify] push FAILED ({type(e).__name__}, "
               f"HTTP {status or 'n/a'}): {title}")
+        return False
 
 
 def notify_stock(cfg: dict, hit: Hit) -> None:
@@ -54,5 +57,6 @@ def notify_new_listing(cfg: dict, hit: Hit) -> None:
     )
 
 
-def notify_info(cfg: dict, title: str, body: str) -> None:
-    _post(cfg, title=title, body=body, priority="default", tags="information_source")
+def notify_info(cfg: dict, title: str, body: str) -> bool:
+    return _post(cfg, title=title, body=body, priority="default",
+                 tags="information_source")

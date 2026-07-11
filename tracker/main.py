@@ -66,10 +66,11 @@ def main() -> int:
     cfg = load_config()
 
     if os.environ.get("SEND_TEST_NOTIFICATION", "").lower() == "true":
-        notify_info(cfg, "Test notification — tracker is connected",
-                    "Your phone will get an urgent push the moment an "
-                    f"alert-enabled {cfg['set']['name']} product is buyable.")
-        print("Test notification sent")
+        sent = notify_info(cfg, "Test notification — tracker is connected",
+                           "Your phone will get an urgent push the moment an "
+                           f"alert-enabled {cfg['set']['name']} product is buyable.")
+        print("Test notification sent — check your phone" if sent
+              else "Test notification NOT sent — see the [notify] line above")
 
     state = load_state()
     session = make_session()
