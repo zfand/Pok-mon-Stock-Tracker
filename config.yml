@@ -9,7 +9,7 @@ set:
   search_query: "pokemon tcg 30th celebration"
   # Drives the countdown on the status page. Date ("2026-10-09") or full
   # timestamp ("2026-10-09T10:00:00-04:00"). Empty = "Release date TBA".
-  release_date: ""
+  release_date: "2026-09-16"
   # Titles containing any of these never match anything
   exclude: []
 
