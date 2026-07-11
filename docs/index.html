@@ -337,9 +337,13 @@
       }).join('');
 
       if (!statusRows) {
+        // Show every retailer being checked, not a truncated subset — the
+        // tracker checks all of them every ~10 minutes even when none has
+        // a listing yet, and hiding half of them here reads as "not being
+        // checked" when they actually are.
         const q = `pokemon tcg 30th celebration ${p.name}`;
         statusRows = `<div class="none">No listings spotted yet — quick search:</div>` +
-          Object.entries(RETAILER_SEARCH).slice(0, 3).map(([r, fn]) =>
+          Object.entries(RETAILER_SEARCH).map(([r, fn]) =>
             `<a href="${escapeHtml(fn(q))}" target="_blank" rel="noopener">
                <span>${escapeHtml(r)}</span><span class="st">search ↗</span></a>`).join('');
       }
