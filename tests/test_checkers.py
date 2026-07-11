@@ -96,6 +96,34 @@ def test_walmart_parses_buyable_item(cfg):
     assert hit.price == "$59.99"
 
 
+def test_walmart_explicit_first_party_seller_is_buyable(cfg):
+    html = _walmart_html([
+        {"name": "Pokemon TCG 30th Anniversary ETB", "canonicalUrl": "/ip/123",
+         "canAddToCart": True, "availabilityStatusV2": {"value": "IN_STOCK"},
+         "priceInfo": {"linePrice": "$59.99"}, "sellerName": "Walmart.com"},
+    ])
+    session = FakeSession([("walmart.com/search", FakeResponse(text=html))])
+    result = walmart.check(session, cfg)
+    assert result.hits[0].in_stock
+
+
+def test_walmart_third_party_seller_never_reported_buyable(cfg):
+    # This is the actual scalper-markup scenario: Walmart's own API says
+    # in stock / add-to-cart eligible, but a marketplace seller (not
+    # Walmart) is fulfilling it — must never trigger a "buy now" push.
+    html = _walmart_html([
+        {"name": "Pokemon TCG 30th Anniversary ETB", "canonicalUrl": "/ip/123",
+         "canAddToCart": True, "availabilityStatusV2": {"value": "IN_STOCK"},
+         "priceInfo": {"linePrice": "$149.99"}, "sellerName": "ACME Collectibles LLC"},
+    ])
+    session = FakeSession([("walmart.com/search", FakeResponse(text=html))])
+    result = walmart.check(session, cfg)
+    assert len(result.hits) == 1
+    hit = result.hits[0]
+    assert not hit.in_stock
+    assert hit.status == "THIRD_PARTY_SELLER:ACME Collectibles LLC"
+
+
 def test_walmart_bot_block_sets_flag(cfg):
     session = FakeSession([
         ("walmart.com/search", FakeResponse(text="Robot or human? Verify")),
