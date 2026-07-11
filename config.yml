@@ -13,9 +13,10 @@ set:
   # Titles containing any of these never match anything
   exclude: []
 
-# Every SKU expected in the set. The lineup below is PROVISIONAL (mirrors the
-# 25th-anniversary Celebrations lineup) until the official product list is
-# announced — rename/add/remove entries freely.
+# Every SKU expected in the set. Confirmed against pokemon.com's own product
+# gallery (via scripts/scan_gallery.py's sitemap discovery + the user
+# manually finding pages) — these are the real product names/slugs, not
+# guesses. There may still be more not yet discovered.
 #
 # Per product:
 #   alert:        push a phone notification when it becomes buyable
@@ -36,13 +37,24 @@ set:
 #   watch_urls:   direct product-page URLs per retailer (most reliable
 #                 check by far — add them the moment a listing page exists)
 products:
+  - id: pokemon-center-elite-trainer-box
+    name: "Elite Trainer Box (Pokémon Center Exclusive)"
+    alert: false
+    purchase: false
+    max_price_usd: 80
+    must_include: [["30th"], ["elite trainer box", "etb"], ["pokemon center", "pokémon center"]]
+    exclude: ["sleeve", "playmat", "binder"]
+    image: "img/pokemon-center-elite-trainer-box.png"
+    gallery_slug: "30th-celebration-pokemon-center-elite-trainer-box"
+    watch_urls: {}
+
   - id: elite-trainer-box
     name: "Elite Trainer Box"
     alert: true
     purchase: false        # flip to true (plus global switches) to auto-buy
     max_price_usd: 80
     must_include: [["30th"], ["elite trainer box", "etb"]]
-    exclude: ["sleeve", "playmat", "binder"]
+    exclude: ["sleeve", "playmat", "binder", "pokemon center", "pokémon center"]
     image: "img/elite-trainer-box.png"
     gallery_slug: "30th-celebration-elite-trainer-box"
     watch_urls: {}         # e.g. target: ["https://www.target.com/p/-/A-123"]
@@ -56,40 +68,49 @@ products:
     gallery_slug: "30th-celebration-ultra-premium-collections-day-night"
     watch_urls: {}
 
-  - id: premium-figure-collection
-    name: "Premium Figure Collection"
+  - id: figure-collection
+    name: "Figure Collection"
     alert: false
     purchase: false
     must_include: [["30th"], ["figure collection"]]
-    image: "img/premium-figure-collection.png"
-    gallery_slug: ""
+    image: "img/figure-collection.png"
+    gallery_slug: "30th-celebration-figure-collection"
     watch_urls: {}
 
-  - id: collector-chest
-    name: "Collector Chest"
+  - id: binder-collection
+    name: "Binder Collection"
     alert: false
     purchase: false
-    must_include: [["30th"], ["collector chest", "collector's chest"]]
-    image: "img/collector-chest.png"
-    gallery_slug: ""
+    must_include: [["30th"], ["binder collection", "binder"]]
+    image: "img/binder-collection.png"
+    gallery_slug: "30th-celebration-binder-collection"
     watch_urls: {}
 
-  - id: pin-collection
-    name: "Deluxe Pin Collection"
+  - id: sylveon-greninja-ex-box
+    name: "Sylveon ex Box & Greninja ex Box"
     alert: false
     purchase: false
-    must_include: [["30th"], ["pin collection"]]
-    image: "img/pin-collection.png"
-    gallery_slug: ""
+    must_include: [["30th"], ["sylveon", "greninja"]]
+    image: "img/sylveon-greninja-ex-box.png"
+    gallery_slug: "30th-celebration-sylveon-ex-box-and-greninja-ex-box"
     watch_urls: {}
 
-  - id: mini-tin
-    name: "Mini Tin"
+  - id: tech-sticker-collection
+    name: "Tech Sticker Collection"
     alert: false
     purchase: false
-    must_include: [["30th"], ["mini tin"]]
-    image: "img/mini-tin.png"
-    gallery_slug: ""
+    must_include: [["30th"], ["tech sticker", "sticker collection"]]
+    image: "img/tech-sticker-collection.png"
+    gallery_slug: "30th-celebration-tech-sticker-collection"
+    watch_urls: {}
+
+  - id: battle-decks-espeon-umbreon
+    name: "Battle Decks – Espeon ex & Umbreon ex"
+    alert: false
+    purchase: false
+    must_include: [["30th"], ["battle deck"], ["espeon", "umbreon"]]
+    image: "img/battle-decks-espeon-umbreon.png"
+    gallery_slug: "30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex"
     watch_urls: {}
 
   - id: poster-collection
@@ -98,16 +119,7 @@ products:
     purchase: false
     must_include: [["30th"], ["poster collection"]]
     image: "img/poster-collection.png"
-    gallery_slug: ""
-    watch_urls: {}
-
-  - id: booster-bundle
-    name: "Booster Bundle"
-    alert: false
-    purchase: false
-    must_include: [["30th"], ["booster bundle"]]
-    image: "img/booster-bundle.png"
-    gallery_slug: ""
+    gallery_slug: "30th-celebration-poster-collection"
     watch_urls: {}
 
 retailers:

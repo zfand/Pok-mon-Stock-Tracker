@@ -11,7 +11,10 @@ the gallery), so this does NOT scrape it. Instead it hits the CDN directly:
 For products with a confirmed `gallery_slug` in config.yml, it just
 downloads. For products without one, it probes a short list of reasonable
 slug guesses and logs (does not assume) any hit — add a confirmed slug to
-config.yml once you know it, e.g. from a product's gallery page URL.
+config.yml once you know it, e.g. from a product's gallery page URL. Every
+currently-tracked product has a confirmed slug (verified against
+pokemon.com's own product gallery), so CANDIDATES is empty until a new
+product gets added to config.yml without one yet.
 """
 
 import io
@@ -27,30 +30,10 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 
 # Reasonable slug guesses for products without a confirmed gallery_slug yet.
-# Purely candidates — nothing here is assumed to exist until probed.
-CANDIDATES = {
-    "premium-figure-collection": [
-        "30th-celebration-premium-figure-collection",
-    ],
-    "collector-chest": [
-        "30th-celebration-collectors-chest",
-        "30th-celebration-collector-chest",
-    ],
-    "pin-collection": [
-        "30th-celebration-pin-collection",
-        "30th-celebration-deluxe-pin-collection",
-    ],
-    "mini-tin": [
-        "30th-celebration-mini-tin",
-        "30th-celebration-mini-tins",
-    ],
-    "poster-collection": [
-        "30th-celebration-poster-collection",
-    ],
-    "booster-bundle": [
-        "30th-celebration-booster-bundle",
-    ],
-}
+# Purely candidates — nothing here is assumed to exist until probed. Empty
+# for now since every tracked product already has a confirmed slug; add an
+# entry here (keyed by product id) if a new product gets added without one.
+CANDIDATES: dict[str, list[str]] = {}
 
 
 def try_download(slug: str, pid: str) -> bool:
