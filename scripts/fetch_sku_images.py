@@ -1,24 +1,23 @@
 """Pull official 30th Celebration product images from pokemon.com's
 product gallery into docs/img/<product-id>.png.
 
-Runs on a GitHub Actions runner (this repo's sandbox blocks outbound
-traffic). Defensive by design: if the page yields no '30th' products, it
-logs a sample of what it did see and exits 0 so we can adjust the parsing.
+The gallery is a client-rendered SPA, so this drives headless Chromium
+(Playwright) on a GitHub Actions runner, searches for "30th", and scrapes
+the rendered tiles. Defensive by design: when nothing matches it logs what
+it did see (tile names + JSON endpoints the page called) so parsing can be
+tuned, and exits 0.
 """
 
 import io
-import re
 import sys
 
 import requests
 from PIL import Image
+from playwright.sync_api import sync_playwright
 
 GALLERY = "https://www.pokemon.com/us/pokemon-tcg/product-gallery"
-HEADERS = {
-    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                   "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"),
-    "Accept-Language": "en-US,en;q=0.9",
-}
+UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 
 KEYWORDS = {
     "elite-trainer-box": ["elite trainer box"],
@@ -31,77 +30,96 @@ KEYWORDS = {
     "booster-bundle": ["booster bundle"],
 }
 
-
-def harvest(html: str) -> list[tuple[str, str]]:
-    """(name, image-url) candidates from IMG tags and embedded JSON."""
-    pairs = []
-    for m in re.finditer(r"<img[^>]*>", html):
-        tag = m.group(0)
-        src = re.search(r'(?:data-)?src="([^"]+)"', tag)
-        alt = re.search(r'alt="([^"]*)"', tag)
-        if src and "assets.pokemon.com" in src.group(1):
-            pairs.append((alt.group(1) if alt else "", src.group(1)))
-    json_like = [
-        r'"name"\s*:\s*"([^"]+)"[^{}]*?"(?:image|imageUrl|thumbnail)[^"]*"\s*:\s*"([^"]+)"',
-        r'"(?:image|imageUrl|thumbnail)[^"]*"\s*:\s*"([^"]+)"[^{}]*?"name"\s*:\s*"([^"]+)"',
-    ]
-    for m in re.finditer(json_like[0], html):
-        pairs.append((m.group(1), m.group(2)))
-    for m in re.finditer(json_like[1], html):
-        pairs.append((m.group(2), m.group(1)))
-    return pairs
+COLLECT_JS = """els => els.map(e => ({
+    text: ((e.closest('a,li,article,section,div') || {}).innerText || '').trim().slice(0, 160),
+    alt: e.alt || '',
+    src: e.currentSrc || e.src || e.getAttribute('data-src') || ''
+}))"""
 
 
 def main() -> int:
-    pairs: list[tuple[str, str]] = []
-    for page in range(1, 7):
-        url = GALLERY if page == 1 else f"{GALLERY}?page={page}"
+    tiles, api_urls = [], set()
+
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch()
+        page = browser.new_page(user_agent=UA)
+        page.on("response", lambda r: api_urls.add(r.url)
+                if "json" in (r.headers.get("content-type") or "") else None)
+
+        page.goto(GALLERY, wait_until="domcontentloaded", timeout=60_000)
+        page.wait_for_timeout(6_000)
+
+        # Try the gallery's own search first — most direct route to the set
         try:
-            r = requests.get(url, headers=HEADERS, timeout=30)
-        except requests.RequestException as e:
-            print(f"page {page}: request failed: {type(e).__name__}")
-            continue
-        print(f"page {page}: HTTP {r.status_code}, {len(r.text)} bytes")
-        if r.status_code != 200:
-            continue
-        pairs += harvest(r.text)
+            search = page.locator(
+                'input[type="search"], input[placeholder*="search" i], '
+                'input[name*="search" i]').first
+            if search.count():
+                search.fill("30th")
+                search.press("Enter")
+                page.wait_for_timeout(4_000)
+                tiles += page.eval_on_selector_all("img", COLLECT_JS)
+                print(f"after search: {len(tiles)} img nodes")
+        except Exception as e:  # noqa: BLE001
+            print("search attempt failed:", type(e).__name__)
 
-    # dedupe on url
+        # Scroll / load-more sweep for good measure
+        for _ in range(6):
+            tiles += page.eval_on_selector_all("img", COLLECT_JS)
+            try:
+                more = page.locator(
+                    'button:has-text("Load More"), a:has-text("Load More")').first
+                if more.count():
+                    more.click(timeout=3_000)
+                    page.wait_for_timeout(2_500)
+                else:
+                    page.mouse.wheel(0, 4_000)
+                    page.wait_for_timeout(1_200)
+            except Exception:  # noqa: BLE001
+                break
+        browser.close()
+
     seen, unique = set(), []
-    for n, u in pairs:
-        if u not in seen:
-            seen.add(u)
-            unique.append((n, u))
+    for t in tiles:
+        src = t["src"]
+        if src and src not in seen and "assets.pokemon.com" in src:
+            seen.add(src)
+            unique.append(t)
 
-    thirty = [(n, u) for n, u in unique if "30th" in n.lower()]
-    print(f"{len(unique)} unique product images found, {len(thirty)} mention '30th'")
+    print(f"{len(unique)} unique assets.pokemon.com images")
+    print("JSON endpoints the page called (for future tuning):")
+    for u in sorted(api_urls)[:20]:
+        print("   ", u[:170])
+
+    thirty = [t for t in unique if "30th" in (t["text"] + " " + t["alt"]).lower()]
+    print(f"{len(thirty)} tiles mention '30th'")
     if not thirty:
-        print("No 30th products found. Sample of names seen:")
-        for n, _ in unique[:40]:
-            print("  -", (n or "(no alt)")[:110])
+        print("Sample of tile texts seen:")
+        for t in unique[:40]:
+            print("  -", (t["text"] or t["alt"] or "(none)")[:110].replace("\n", " / "))
         return 0
 
-    print("All '30th' product names:")
-    for n, _ in thirty:
-        print("  *", n[:110])
+    print("All '30th' tiles:")
+    for t in thirty:
+        print("  *", (t["text"] or t["alt"])[:110].replace("\n", " / "))
 
     saved = 0
     for pid, kws in KEYWORDS.items():
-        match = next(((n, u) for n, u in thirty
-                      if any(k in n.lower() for k in kws)), None)
+        label = lambda t: (t["text"] + " " + t["alt"]).lower()  # noqa: E731
+        match = next((t for t in thirty if any(k in label(t) for k in kws)), None)
         if not match:
             print(f"{pid}: no gallery match yet")
             continue
-        name, url = match
+        url = match["src"]
         if url.startswith("//"):
             url = "https:" + url
         try:
-            resp = requests.get(url, headers=HEADERS, timeout=30)
+            resp = requests.get(url, headers={"User-Agent": UA}, timeout=30)
             resp.raise_for_status()
             img = Image.open(io.BytesIO(resp.content)).convert("RGBA")
             img.thumbnail((800, 800))
             img.save(f"docs/img/{pid}.png")
-            print(f"saved docs/img/{pid}.png  <-  {name}")
+            print(f"saved docs/img/{pid}.png  <-  {(match['text'] or match['alt'])[:90]}")
             saved += 1
         except Exception as e:  # noqa: BLE001
             print(f"{pid}: download failed: {type(e).__name__}: {e}")
