@@ -130,6 +130,8 @@
   .badge.on   { background: rgba(232,196,105,.14); border-color: var(--gold-dim); color: var(--gold); }
   .badge.buy  { background: rgba(238,21,21,.16); border-color: rgba(238,21,21,.55); color: #ff8a8a; }
   .badge.off  { background: rgba(255,255,255,.05); color: var(--muted); }
+  .badge.found      { background: rgba(96,165,250,.14); border-color: rgba(96,165,250,.5); color: #93c5fd; }
+  .badge.found-live { background: rgba(74,222,128,.16); border-color: rgba(74,222,128,.55); color: #86efac; }
   .statuses { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
   .statuses a {
     display: flex; justify-content: space-between; gap: 10px;
@@ -315,6 +317,16 @@
         if (!cur || (info.in_stock && !cur.info.in_stock)) byRetailer[retailer] = { url, info };
       }
 
+      // At-a-glance: has the tracker actually matched this SKU to a real
+      // retailer listing, or is it still just watching search results?
+      const retailerCount = Object.keys(byRetailer).length;
+      const anyBuyable = Object.values(byRetailer).some(({ info }) => info.in_stock);
+      const foundBadge = retailerCount === 0
+        ? '<span class="badge off">🔎 not found at any retailer yet</span>'
+        : anyBuyable
+          ? `<span class="badge found-live">🟢 buyable at ${retailerCount} retailer${retailerCount > 1 ? 's' : ''}</span>`
+          : `<span class="badge found">📍 matched at ${retailerCount} retailer${retailerCount > 1 ? 's' : ''}</span>`;
+
       let statusRows = Object.entries(byRetailer).map(([retailer, { url, info }]) => {
         const cls = info.in_stock ? 'live' : 'listed';
         const label = info.in_stock
@@ -337,7 +349,7 @@
              onerror="this.onerror=null; this.src='${BALL}'; this.style.maxHeight='90px'"></div>
         <div class="body">
           <h3>${escapeHtml(p.name)}</h3>
-          <div class="badges">${alertBadge}${buyBadge}</div>
+          <div class="badges">${foundBadge}${alertBadge}${buyBadge}</div>
           <div class="statuses">${statusRows}</div>
         </div>`;
       catalog.appendChild(card);

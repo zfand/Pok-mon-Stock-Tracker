@@ -17,21 +17,32 @@ DAY = 24 * 3600
 
 def process_hits(cfg: dict, state: dict, hits: list[Hit],
                  products_by_id: dict) -> list[tuple[Hit, dict]]:
-    """Update state, send notifications for alert-enabled products; return
-    (hit, product) pairs that just became buyable AND are purchase-flagged."""
+    """Update state, send notifications, return (hit, product) pairs that
+    just became buyable AND are purchase-flagged.
+
+    Two independent notifications:
+      - "spotted a new listing" fires for ANY tracked product the first
+        time its retailer::url key is seen at all, regardless of the
+        product's alert flag — discovering that a SKU exists somewhere is
+        useful to know even for products you don't want urgent buy alerts
+        for. Suppressed when the urgent alert below already covers the
+        same event, so alert-enabled products don't get double-pinged.
+      - "it's buyable" (urgent) fires only for alert-enabled products, on
+        the transition into being buyable — unchanged from before.
+    """
     to_buy = []
     listings = state["listings"]
     for hit in hits:
         product = products_by_id.get(hit.product_id)
         alert = product.get("alert", True) if product else True
         prev = listings.get(hit.key)
+        is_new_listing = prev is None
         newly_buyable = hit.in_stock and (prev is None or not prev.get("in_stock"))
 
-        if alert:
-            if newly_buyable:
-                notify_stock(cfg, hit)
-            elif prev is None and not hit.in_stock:
-                notify_new_listing(cfg, hit)
+        if alert and newly_buyable:
+            notify_stock(cfg, hit)
+        elif is_new_listing:
+            notify_new_listing(cfg, hit)
         if newly_buyable and product and product.get("purchase"):
             to_buy.append((hit, product))
 

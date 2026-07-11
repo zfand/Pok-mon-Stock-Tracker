@@ -46,13 +46,27 @@ def notify_stock(cfg: dict, hit: Hit) -> None:
 
 
 def notify_new_listing(cfg: dict, hit: Hit) -> None:
-    """A matching listing appeared but isn't purchasable yet — still worth knowing."""
+    """A SKU was spotted at a retailer for the first time — sent regardless
+    of the product's alert flag, since discovering a listing exists is
+    useful even for products that don't get urgent buyability pings.
+
+    Alert-enabled products skip this when they're already buyable (they get
+    notify_stock's urgent push instead — see process_hits), so the
+    in_stock=True wording here only actually fires for alert-off products.
+    """
+    price = f" — {hit.price}" if hit.price else ""
+    if hit.in_stock:
+        title = f"New listing spotted at {hit.retailer} — already buyable!{price}"
+        tags = "eyes,shopping_cart"
+    else:
+        title = f"New listing spotted at {hit.retailer} (not buyable yet)"
+        tags = "eyes"
     _post(
         cfg,
-        title=f"New listing spotted at {hit.retailer} (not buyable yet)",
+        title=title,
         body=f"{hit.title}\nStatus: {hit.status or 'unavailable'}\n{hit.url}",
         priority="high",
-        tags="eyes",
+        tags=tags,
         click=hit.url,
     )
 

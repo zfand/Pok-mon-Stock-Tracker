@@ -43,14 +43,48 @@ def test_purchase_flagged_product_lands_in_buy_list(cfg, monkeypatch):
     assert to_buy == [(hit, cfg["products"][0])]
 
 
-def test_alert_off_product_records_state_silently(cfg, monkeypatch):
+def test_alert_off_product_first_sighting_gets_new_listing_push_not_urgent(cfg, monkeypatch):
+    # Discovery is decoupled from the alert flag: even a product you don't
+    # want urgent buy pings for should tell you once when it's first spotted.
+    calls = _capture_notifiers(monkeypatch)
+    state = {"listings": {}, "blocks": {}}
+    hit = _hit(False, url="https://t.example/p/2", product_id="booster-bundle")
+    to_buy = main_mod.process_hits(cfg, state, [hit], _pmap(cfg))
+    assert calls["stock"] == []
+    assert calls["new"] == [hit]
+    assert to_buy == []
+    assert state["listings"][hit.key]["in_stock"] is False
+
+
+def test_alert_off_product_first_sighting_already_buyable_still_gets_new_listing_not_urgent(
+        cfg, monkeypatch):
+    # Already-buyable-on-first-sight for an alert-off product should NOT
+    # trigger the urgent "IN STOCK" push (that stays alert-gated) — it
+    # should still get exactly the one discovery push.
     calls = _capture_notifiers(monkeypatch)
     state = {"listings": {}, "blocks": {}}
     hit = _hit(True, url="https://t.example/p/2", product_id="booster-bundle")
     to_buy = main_mod.process_hits(cfg, state, [hit], _pmap(cfg))
-    assert calls["stock"] == [] and calls["new"] == []
+    assert calls["stock"] == []
+    assert calls["new"] == [hit]
     assert to_buy == []
     assert state["listings"][hit.key]["in_stock"] is True  # page still sees it
+
+
+def test_alert_off_product_subsequent_changes_stay_silent(cfg, monkeypatch):
+    # Only the FIRST sighting is a "new listing" — ongoing changes on an
+    # alert-off product (e.g. later becoming buyable) still don't push,
+    # matching the existing alert-off design for buyability specifically.
+    calls = _capture_notifiers(monkeypatch)
+    state = {"listings": {}, "blocks": {}}
+    url = "https://t.example/p/2"
+    main_mod.process_hits(cfg, state, [_hit(False, url=url, product_id="booster-bundle")],
+                          _pmap(cfg))
+    assert len(calls["new"]) == 1
+    main_mod.process_hits(cfg, state, [_hit(True, url=url, product_id="booster-bundle")],
+                          _pmap(cfg))
+    assert calls["stock"] == []
+    assert len(calls["new"]) == 1  # unchanged — no second push
 
 
 def test_new_unbuyable_listing_notifies_new_listing_only(cfg, monkeypatch):

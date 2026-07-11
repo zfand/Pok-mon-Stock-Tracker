@@ -33,6 +33,30 @@ def test_notify_stock_is_urgent_with_click_url(cfg, monkeypatch):
     assert hit.url.encode() in call["data"]
 
 
+def test_notify_new_listing_not_buyable_wording(cfg, monkeypatch):
+    sent = _Sent()
+    monkeypatch.setattr(notify_mod.requests, "post", sent)
+    hit = Hit("Target", "Pokemon 30th Figure Collection", "https://t.example/p/3",
+              in_stock=False, status="OUT_OF_STOCK")
+    notify_mod.notify_new_listing(cfg, hit)
+    (call,) = sent.calls
+    assert b"not buyable yet" in call["headers"]["Title"]
+    assert call["headers"]["Priority"] == "high"
+
+
+def test_notify_new_listing_already_buyable_wording(cfg, monkeypatch):
+    sent = _Sent()
+    monkeypatch.setattr(notify_mod.requests, "post", sent)
+    hit = Hit("Target", "Pokemon 30th Figure Collection", "https://t.example/p/3",
+              in_stock=True, price="$49.99", status="IN_STOCK")
+    notify_mod.notify_new_listing(cfg, hit)
+    (call,) = sent.calls
+    title = call["headers"]["Title"]
+    assert b"already buyable" in title
+    assert b"$49.99" in title
+    assert b"not buyable" not in title
+
+
 def test_notify_uses_env_topic_override(cfg, monkeypatch):
     # config.load_config maps NTFY_TOPIC env into cfg; simulate the result
     cfg["notifications"]["ntfy_topic"] = "secret-topic"
