@@ -10,15 +10,22 @@ Individual product pages (/us/pokemon-tcg/product-gallery/<slug>) are
 fetched with headless Chromium, not plain HTTP: a one-off diagnostic
 confirmed plain `requests` gets walled on every single one of these pages
 (100% block rate across 150 real slugs found via sitemap), while a real
-rendered browser loads them fine. This mirrors the product-gallery
-*listing* page, which is walled for everyone including headless Chromium —
-that surface is not attempted here at all; only individual product pages.
-Sitemap discovery is the crawl seed, plus any gallery_slug values already
-confirmed in config.yml.
+rendered browser succeeded cleanly on an isolated single request. But a
+batch of 80 sequential browser requests in one run came back ~99% blocked
+— including the very same slug that had just succeeded in isolation minutes
+earlier. That's the signature of adaptive, volume-based rate limiting, not
+a hard per-page wall: a lone request looks human, a rapid sequence from
+one CI IP does not. Respecting that (rather than trying to defeat it with
+IP rotation or fingerprint spoofing, which is out of bounds here) means
+crawling in small, politely-paced batches — hence the low per-run cap and
+long randomized delay below. confirmed gallery_slug values from config.yml
+are always scanned first, ahead of sitemap-discovered slugs, so the small
+per-run budget goes to already-known products before speculative ones.
 """
 
 import datetime
 import json
+import random
 import sys
 import time
 
@@ -41,10 +48,16 @@ SITEMAP_CANDIDATES = [
     "https://www.pokemon.com/us/sitemap.xml",
 ]
 MAX_CHILD_SITEMAPS = 20
-MAX_PRODUCT_PAGES = 80   # each page load takes several seconds via a real browser
+# Kept deliberately small and paced: a batch of 80 back-to-back page loads
+# came back ~99% blocked in testing, while a single isolated request
+# succeeded cleanly — this is rate-based bot mitigation, not a hard wall,
+# so the fix is a gentler pace, not a bigger hammer.
+MAX_PRODUCT_PAGES = 12
 PAGE_WAIT_MS = 3_500
 RETRY_WAIT_MS = 6_000    # one retry with a longer wait if the first load looks too thin
 MIN_HTML_LEN = 5_000
+MIN_DELAY_BETWEEN_PAGES_SEC = 8
+MAX_DELAY_BETWEEN_PAGES_SEC = 16
 
 
 def discover_via_sitemap() -> list[str]:
@@ -157,6 +170,19 @@ def check_169_theory(records: list[dict]) -> None:
               "set-specific — worth a closer look, not assumed either way.")
 
 
+def load_existing_gallery() -> tuple[dict[str, dict], int]:
+    """(slug -> record) for everything ever recorded, plus the rotation
+    cursor for how far through the non-seed discovery backlog we've gotten.
+    Missing/corrupt file just means starting fresh — never fatal."""
+    try:
+        with open("data/gallery.json", encoding="utf-8") as f:
+            data = json.load(f)
+        by_slug = {p["slug"]: p for p in data.get("products", [])}
+        return by_slug, int(data.get("next_scan_offset", 0))
+    except (FileNotFoundError, json.JSONDecodeError, ValueError):
+        return {}, 0
+
+
 def main() -> int:
     cfg = yaml.safe_load(open("config.yml", encoding="utf-8"))
     seed_slugs = {p["gallery_slug"] for p in cfg["products"] if p.get("gallery_slug")}
@@ -164,46 +190,75 @@ def main() -> int:
 
     discovered = discover_via_sitemap()
     if not discovered:
-        print("sitemap discovery found nothing usable — falling back to "
-              "config.yml's seed slugs only. Full-catalog discovery isn't "
-              "working right now; logging this rather than pretending "
-              "otherwise.")
+        print("sitemap discovery found nothing usable this run — falling "
+              "back to config.yml's seed slugs only for the seed portion of "
+              "the budget. Rotation through the previously-discovered "
+              "backlog (if any is already on file) still proceeds.")
 
-    all_slugs = sorted(seed_slugs | set(discovered))[:MAX_PRODUCT_PAGES]
-    print(f"scanning {len(all_slugs)} product page(s) total "
-          f"({len(discovered)} discovered via sitemap, {len(seed_slugs)} seeded, "
-          f"capped at {MAX_PRODUCT_PAGES} per run)")
+    existing_by_slug, cursor = load_existing_gallery()
 
-    records = []
+    # Confirmed slugs are re-scanned every run (their release dates matter
+    # most and there are only ever a handful). The much larger backlog of
+    # sitemap-discovered slugs is worked through a small window at a time,
+    # rotating via a persisted cursor, so the whole catalog gets covered
+    # over many gentle runs instead of one loud one.
+    backlog = sorted((set(discovered) | set(existing_by_slug)) - seed_slugs)
+    budget_for_backlog = max(MAX_PRODUCT_PAGES - len(seed_slugs), 0)
+    if backlog and budget_for_backlog:
+        cursor %= len(backlog)
+        window = (backlog[cursor:] + backlog[:cursor])[:budget_for_backlog]
+        next_cursor = (cursor + len(window)) % len(backlog)
+    else:
+        window, next_cursor = [], cursor
+
+    all_slugs = sorted(seed_slugs) + window
+    print(f"scanning {len(all_slugs)} product page(s) this run "
+          f"({len(seed_slugs)} confirmed seed(s), {len(window)} from a "
+          f"backlog of {len(backlog)} discovered-but-not-yet-fresh slugs), "
+          f"paced {MIN_DELAY_BETWEEN_PAGES_SEC}-{MAX_DELAY_BETWEEN_PAGES_SEC}s "
+          f"apart to stay a polite crawler")
+
+    new_records = []
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
         for i, slug in enumerate(all_slugs):
+            if i > 0:
+                time.sleep(random.uniform(MIN_DELAY_BETWEEN_PAGES_SEC,
+                                          MAX_DELAY_BETWEEN_PAGES_SEC))
             rec = fetch_product_page(browser, slug)
             flag = (" BLOCKED" if rec["blocked"]
                     else f" error={rec['error']}" if rec["error"] else "")
             print(f"  [{i + 1}/{len(all_slugs)}] {slug}: "
                   f"release={rec['release_date'] or rec['release_date_raw'] or '?'}, "
                   f"set={rec['set_slug']}{' (guessed)' if rec['set_guessed'] else ''}{flag}")
-            records.append(rec)
+            new_records.append(rec)
         browser.close()
 
-    check_169_theory(records)
+    check_169_theory(new_records)
 
-    records.sort(key=lambda r: (r["release_date"] or "9999-99-99", r["set_slug"] or "", r["slug"]))
+    # Merge: this run's results overwrite their slugs; everything else
+    # already on file (not touched this run) carries forward unchanged.
+    existing_by_slug.update({r["slug"]: r for r in new_records})
+    all_records = sorted(existing_by_slug.values(),
+                         key=lambda r: (r["release_date"] or "9999-99-99",
+                                       r["set_slug"] or "", r["slug"]))
+
     with open("data/gallery.json", "w", encoding="utf-8") as f:
         json.dump({
             "generated_at": datetime.datetime.now(datetime.timezone.utc)
                                      .isoformat(timespec="seconds"),
-            "products": records,
+            "next_scan_offset": next_cursor,
+            "products": all_records,
         }, f, indent=2)
         f.write("\n")
 
-    resolved_dates = sum(1 for r in records if r["release_date"])
-    resolved_images = sum(1 for r in records if r["image"])
-    blocked = sum(1 for r in records if r["blocked"])
-    print(f"\nwrote data/gallery.json: {len(records)} product(s), "
-          f"{resolved_dates} with a release date, {resolved_images} with an image, "
-          f"{blocked} blocked")
+    resolved_dates = sum(1 for r in all_records if r["release_date"])
+    resolved_images = sum(1 for r in all_records if r["image"])
+    blocked = sum(1 for r in all_records if r["blocked"])
+    print(f"\nwrote data/gallery.json: {len(all_records)} product(s) total "
+          f"(accumulated across all runs), {resolved_dates} with a release "
+          f"date, {resolved_images} with an image, {blocked} currently "
+          f"marked blocked")
     return 0
 
 

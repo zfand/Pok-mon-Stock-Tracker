@@ -5,11 +5,23 @@ Raw output of `scripts/scan_gallery.py`, refreshed daily by the
 does not drive the live status page yet (see the tracked task: "Refactor
 status page: release-date schedule view grouped by set").
 
+**This file accumulates across runs — it is not overwritten wholesale.**
+Only 12 product pages are fetched per run (config.yml's confirmed
+`gallery_slug` values every time, plus a rotating window through the much
+larger sitemap-discovered backlog via `next_scan_offset`). Everything else
+already on file from a previous run is carried forward untouched. This is
+deliberately slow: a batch of 80 back-to-back page loads in one run came
+back ~99% blocked in testing, while a single isolated request succeeded
+cleanly — see the comment at the top of `scripts/scan_gallery.py` for the
+full story. Full catalog coverage happens gradually, a dozen pages a day,
+not in one run.
+
 Shape:
 
 ```json
 {
   "generated_at": "2026-07-11T19:00:00+00:00",
+  "next_scan_offset": 12,
   "products": [
     {
       "slug": "30th-celebration-elite-trainer-box",
