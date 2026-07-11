@@ -30,10 +30,14 @@ set:
 #   image:        artwork shown on the status page. Local file in docs/img/;
 #                 scripts/fetch_sku_images.py refreshes it from pokemon.com
 #                 when gallery_slug is set (falls back to generated art).
-#   gallery_slug: the product's slug on pokemon.com's official asset CDN
-#                 (from a URL like .../incrementals/2026/<slug>/<slug>-169-en.png,
-#                 found via the product gallery page). Empty = unknown; the
-#                 fetch workflow will probe guesses and log any it finds.
+#   gallery_slug: the product's slug on its pokemon.com product gallery page
+#                 (.../product-gallery/<slug>). Used by scripts/scan_gallery.py.
+#   image_slug:   the product's slug on pokemon.com's official asset CDN
+#                 (from a URL like .../incrementals/2026/<slug>/<slug>-169-en.png).
+#                 NOT always identical to gallery_slug — confirmed cases so far
+#                 drop "-celebration-" or "-and-" from the page slug. Optional:
+#                 falls back to gallery_slug, then to trying both known
+#                 transformations, when unset. Set explicitly once confirmed.
 #   watch_urls:   direct product-page URLs per retailer (most reliable
 #                 check by far — add them the moment a listing page exists)
 products:
@@ -93,6 +97,7 @@ products:
     must_include: [["30th"], ["sylveon", "greninja"]]
     image: "img/sylveon-greninja-ex-box.png"
     gallery_slug: "30th-celebration-sylveon-ex-box-and-greninja-ex-box"
+    image_slug: "30th-celebration-sylveon-ex-box-greninja-ex-box"
     watch_urls: {}
 
   - id: tech-sticker-collection
@@ -120,6 +125,7 @@ products:
     must_include: [["30th"], ["poster collection"]]
     image: "img/poster-collection.png"
     gallery_slug: "30th-celebration-poster-collection"
+    image_slug: "30th-poster-collection"
     watch_urls: {}
 
 retailers:

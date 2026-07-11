@@ -39,14 +39,18 @@ repo's default branch (there is no separate `main`).
      just landed, or was refreshed).
    - Which are still unresolved (every candidate slug 403'd — still on
      placeholder art).
-   - **Important**: when a *candidate* guess matches for a product that
-     didn't have a confirmed `gallery_slug` yet, the log prints a line like
-     `^ add this to config.yml as: gallery_slug: "<slug>"`. When you see
-     that, actually make the edit — add/update that product's
-     `gallery_slug:` field in `config.yml` (see existing entries for the
-     field's place in each product block), commit, and push. This is what
-     makes the match durable: without it, next run has to re-guess instead
-     of just downloading directly.
+   - **Important**: the CDN image slug isn't always identical to the
+     product's gallery-page slug (`gallery_slug`) — confirmed cases so far
+     drop either "-celebration-" or "-and-" from the page slug. When a
+     product has no `image_slug` set, the script auto-tries both
+     transformations of `gallery_slug` as fallbacks. If one hits, the log
+     prints `^ add this to config.yml as: image_slug: "<slug>"` — when you
+     see that, actually make the edit (add an `image_slug:` field right
+     after that product's `gallery_slug:` line in `config.yml`), commit,
+     and push. This makes the match durable: without it, next run has to
+     re-derive it instead of downloading directly. (A candidate guess from
+     `CANDIDATES` matching for a product with no `gallery_slug` at all logs
+     the same way but as `gallery_slug: "<slug>"` instead.)
 
 4. **Check for genuinely new SKUs**, not just new images for known
    products. Read `data/gallery.json` and look at products with
