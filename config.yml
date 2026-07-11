@@ -43,7 +43,7 @@ set:
 products:
   - id: pokemon-center-elite-trainer-box
     name: "Elite Trainer Box (Pokémon Center Exclusive)"
-    alert: false
+    alert: true
     purchase: false
     max_price_usd: 80
     must_include: [["30th"], ["elite trainer box", "etb"], ["pokemon center", "pokémon center"]]
@@ -65,7 +65,7 @@ products:
 
   - id: ultra-premium-collection
     name: "Ultra-Premium Collection – Day & Night"
-    alert: false
+    alert: true
     purchase: false
     must_include: [["30th"], ["ultra-premium", "ultra premium"]]
     image: "img/ultra-premium-collection.png"
@@ -74,7 +74,7 @@ products:
 
   - id: figure-collection
     name: "Figure Collection"
-    alert: false
+    alert: true
     purchase: false
     must_include: [["30th"], ["figure collection"]]
     image: "img/figure-collection.png"
@@ -92,7 +92,7 @@ products:
 
   - id: sylveon-greninja-ex-box
     name: "Sylveon ex Box & Greninja ex Box"
-    alert: false
+    alert: true
     purchase: false
     must_include: [["30th"], ["sylveon", "greninja"]]
     image: "img/sylveon-greninja-ex-box.png"
