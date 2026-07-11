@@ -205,7 +205,22 @@
 </div>
 
 <script>
-  const BALL = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="white" stroke="%23222" stroke-width="6"/><path d="M4 50a46 46 0 0 1 92 0Z" fill="%23ee1515"/><rect x="4" y="46" width="92" height="8" fill="%23222"/><circle cx="50" cy="50" r="15" fill="white" stroke="%23222" stroke-width="6"/></svg>';
+  // encodeURIComponent leaves no literal quotes/angle-brackets in the URI,
+  // so it's safe to interpolate into an HTML attribute however it's quoted
+  // (a raw '"' in the SVG markup would otherwise close the attribute early
+  // and spill the rest of the tag as visible text — that was the bug here).
+  const BALL_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">'
+    + '<circle cx="50" cy="50" r="46" fill="white" stroke="#222" stroke-width="6"/>'
+    + '<path d="M4 50a46 46 0 0 1 92 0Z" fill="#ee1515"/>'
+    + '<rect x="4" y="46" width="92" height="8" fill="#222"/>'
+    + '<circle cx="50" cy="50" r="15" fill="white" stroke="#222" stroke-width="6"/></svg>';
+  const BALL = 'data:image/svg+xml,' + encodeURIComponent(BALL_SVG);
+
+  function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+    ));
+  }
 
   // --- floating background card art (Celebrations set) ---
   const CARDS = [1, 2, 4, 5, 8, 11, 15, 17, 21];
@@ -303,25 +318,25 @@
       let statusRows = Object.entries(byRetailer).map(([retailer, { url, info }]) => {
         const cls = info.in_stock ? 'live' : 'listed';
         const label = info.in_stock
-          ? `BUYABLE${info.price ? ' · ' + info.price : ''}`
-          : `listed · ${info.status || 'unavailable'}`;
-        return `<a href="${url}" target="_blank" rel="noopener">
-                  <span>${retailer}</span><span class="st ${cls}">${label}</span></a>`;
+          ? `BUYABLE${info.price ? ' · ' + escapeHtml(info.price) : ''}`
+          : `listed · ${escapeHtml(info.status || 'unavailable')}`;
+        return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">
+                  <span>${escapeHtml(retailer)}</span><span class="st ${cls}">${label}</span></a>`;
       }).join('');
 
       if (!statusRows) {
         const q = `pokemon tcg 30th celebration ${p.name}`;
         statusRows = `<div class="none">No listings spotted yet — quick search:</div>` +
           Object.entries(RETAILER_SEARCH).slice(0, 3).map(([r, fn]) =>
-            `<a href="${fn(q)}" target="_blank" rel="noopener">
-               <span>${r}</span><span class="st">search ↗</span></a>`).join('');
+            `<a href="${escapeHtml(fn(q))}" target="_blank" rel="noopener">
+               <span>${escapeHtml(r)}</span><span class="st">search ↗</span></a>`).join('');
       }
 
       card.innerHTML = `
-        <div class="art"><img alt="" src="${p.image || BALL}"
-             onerror="this.src='${BALL}'; this.style.maxHeight='90px'"></div>
+        <div class="art"><img alt="" src="${escapeHtml(p.image || BALL)}"
+             onerror="this.onerror=null; this.src='${BALL}'; this.style.maxHeight='90px'"></div>
         <div class="body">
-          <h3>${p.name}</h3>
+          <h3>${escapeHtml(p.name)}</h3>
           <div class="badges">${alertBadge}${buyBadge}</div>
           <div class="statuses">${statusRows}</div>
         </div>`;
