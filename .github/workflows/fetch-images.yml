@@ -16,8 +16,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: pip install requests pillow playwright
-      - run: playwright install --with-deps chromium
+      - run: pip install requests pillow pyyaml
       - run: python scripts/fetch_sku_images.py
       - name: Commit updated images
         run: |
@@ -25,7 +24,7 @@ jobs:
             git config user.name "stock-tracker[bot]"
             git config user.email "actions@users.noreply.github.com"
             git add docs/img/
-            git commit -m "chore: pull official SKU images from pokemon.com product gallery"
+            git commit -m "chore: refresh SKU images from pokemon.com asset CDN"
             git push
           else
             echo "No image changes."

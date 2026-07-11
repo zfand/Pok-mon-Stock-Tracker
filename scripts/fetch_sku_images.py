@@ -1,129 +1,106 @@
-"""Pull official 30th Celebration product images from pokemon.com's
-product gallery into docs/img/<product-id>.png.
+"""Pull official 30th Celebration product images from pokemon.com's asset
+CDN into docs/img/<product-id>.png.
 
-The gallery is a client-rendered SPA, so this drives headless Chromium
-(Playwright) on a GitHub Actions runner, searches for "30th", and scrapes
-the rendered tiles. Defensive by design: when nothing matches it logs what
-it did see (tile names + JSON endpoints the page called) so parsing can be
-tuned, and exits 0.
+The product gallery itself is a bot-walled SPA (confirmed: even headless
+Chromium on an Actions runner gets served a compliance/challenge page, not
+the gallery), so this does NOT scrape it. Instead it hits the CDN directly:
+
+    https://www.pokemon.com/static-assets/content-assets/cms2/img/
+        trading-card-game/series/incrementals/2026/<slug>/<slug>-169-en.png
+
+For products with a confirmed `gallery_slug` in config.yml, it just
+downloads. For products without one, it probes a short list of reasonable
+slug guesses and logs (does not assume) any hit — add a confirmed slug to
+config.yml once you know it, e.g. from a product's gallery page URL.
 """
 
 import io
 import sys
 
 import requests
+import yaml
 from PIL import Image
-from playwright.sync_api import sync_playwright
 
-GALLERY = "https://www.pokemon.com/us/pokemon-tcg/product-gallery"
+BASE = ("https://www.pokemon.com/static-assets/content-assets/cms2/img/"
+         "trading-card-game/series/incrementals/2026/{slug}/{slug}-169-en.png")
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 
-KEYWORDS = {
-    "elite-trainer-box": ["elite trainer box"],
-    "ultra-premium-collection": ["ultra-premium", "ultra premium"],
-    "premium-figure-collection": ["figure collection"],
-    "collector-chest": ["collector chest", "collector's chest"],
-    "pin-collection": ["pin collection"],
-    "mini-tin": ["mini tin"],
-    "poster-collection": ["poster collection"],
-    "booster-bundle": ["booster bundle"],
+# Reasonable slug guesses for products without a confirmed gallery_slug yet.
+# Purely candidates — nothing here is assumed to exist until probed.
+CANDIDATES = {
+    "premium-figure-collection": [
+        "30th-celebration-premium-figure-collection",
+    ],
+    "collector-chest": [
+        "30th-celebration-collectors-chest",
+        "30th-celebration-collector-chest",
+    ],
+    "pin-collection": [
+        "30th-celebration-pin-collection",
+        "30th-celebration-deluxe-pin-collection",
+    ],
+    "mini-tin": [
+        "30th-celebration-mini-tin",
+        "30th-celebration-mini-tins",
+    ],
+    "poster-collection": [
+        "30th-celebration-poster-collection",
+    ],
+    "booster-bundle": [
+        "30th-celebration-booster-bundle",
+    ],
 }
 
-COLLECT_JS = """els => els.map(e => ({
-    text: ((e.closest('a,li,article,section,div') || {}).innerText || '').trim().slice(0, 160),
-    alt: e.alt || '',
-    src: e.currentSrc || e.src || e.getAttribute('data-src') || ''
-}))"""
+
+def try_download(slug: str, pid: str) -> bool:
+    url = BASE.format(slug=slug)
+    try:
+        r = requests.get(url, headers={"User-Agent": UA}, timeout=20)
+    except requests.RequestException as e:
+        print(f"  {slug}: request failed: {type(e).__name__}")
+        return False
+    if r.status_code != 200 or "image" not in r.headers.get("content-type", ""):
+        print(f"  {slug}: HTTP {r.status_code}, "
+              f"content-type={r.headers.get('content-type')}")
+        return False
+    img = Image.open(io.BytesIO(r.content)).convert("RGBA")
+    img.save(f"docs/img/{pid}.png")
+    print(f"  {slug}: MATCH — saved docs/img/{pid}.png ({img.size[0]}x{img.size[1]})")
+    return True
 
 
 def main() -> int:
-    tiles, api_urls = [], set()
+    cfg = yaml.safe_load(open("config.yml", encoding="utf-8"))
+    saved, unresolved = 0, []
 
-    with sync_playwright() as pw:
-        browser = pw.chromium.launch()
-        page = browser.new_page(user_agent=UA)
-        page.on("response", lambda r: api_urls.add(r.url)
-                if "json" in (r.headers.get("content-type") or "") else None)
-
-        page.goto(GALLERY, wait_until="domcontentloaded", timeout=60_000)
-        page.wait_for_timeout(6_000)
-
-        # Try the gallery's own search first — most direct route to the set
-        try:
-            search = page.locator(
-                'input[type="search"], input[placeholder*="search" i], '
-                'input[name*="search" i]').first
-            if search.count():
-                search.fill("30th")
-                search.press("Enter")
-                page.wait_for_timeout(4_000)
-                tiles += page.eval_on_selector_all("img", COLLECT_JS)
-                print(f"after search: {len(tiles)} img nodes")
-        except Exception as e:  # noqa: BLE001
-            print("search attempt failed:", type(e).__name__)
-
-        # Scroll / load-more sweep for good measure
-        for _ in range(6):
-            tiles += page.eval_on_selector_all("img", COLLECT_JS)
-            try:
-                more = page.locator(
-                    'button:has-text("Load More"), a:has-text("Load More")').first
-                if more.count():
-                    more.click(timeout=3_000)
-                    page.wait_for_timeout(2_500)
-                else:
-                    page.mouse.wheel(0, 4_000)
-                    page.wait_for_timeout(1_200)
-            except Exception:  # noqa: BLE001
-                break
-        browser.close()
-
-    seen, unique = set(), []
-    for t in tiles:
-        src = t["src"]
-        if src and src not in seen and "assets.pokemon.com" in src:
-            seen.add(src)
-            unique.append(t)
-
-    print(f"{len(unique)} unique assets.pokemon.com images")
-    print("JSON endpoints the page called (for future tuning):")
-    for u in sorted(api_urls)[:20]:
-        print("   ", u[:170])
-
-    thirty = [t for t in unique if "30th" in (t["text"] + " " + t["alt"]).lower()]
-    print(f"{len(thirty)} tiles mention '30th'")
-    if not thirty:
-        print("Sample of tile texts seen:")
-        for t in unique[:40]:
-            print("  -", (t["text"] or t["alt"] or "(none)")[:110].replace("\n", " / "))
-        return 0
-
-    print("All '30th' tiles:")
-    for t in thirty:
-        print("  *", (t["text"] or t["alt"])[:110].replace("\n", " / "))
-
-    saved = 0
-    for pid, kws in KEYWORDS.items():
-        label = lambda t: (t["text"] + " " + t["alt"]).lower()  # noqa: E731
-        match = next((t for t in thirty if any(k in label(t) for k in kws)), None)
-        if not match:
-            print(f"{pid}: no gallery match yet")
+    for product in cfg["products"]:
+        pid = product["id"]
+        slug = (product.get("gallery_slug") or "").strip()
+        print(f"\n[{pid}]")
+        if slug:
+            if try_download(slug, pid):
+                saved += 1
+            else:
+                print(f"  confirmed slug '{slug}' did not resolve — asset may have moved")
+                unresolved.append(pid)
             continue
-        url = match["src"]
-        if url.startswith("//"):
-            url = "https:" + url
-        try:
-            resp = requests.get(url, headers={"User-Agent": UA}, timeout=30)
-            resp.raise_for_status()
-            img = Image.open(io.BytesIO(resp.content)).convert("RGBA")
-            img.thumbnail((800, 800))
-            img.save(f"docs/img/{pid}.png")
-            print(f"saved docs/img/{pid}.png  <-  {(match['text'] or match['alt'])[:90]}")
-            saved += 1
-        except Exception as e:  # noqa: BLE001
-            print(f"{pid}: download failed: {type(e).__name__}: {e}")
-    print("total saved:", saved)
+
+        found = False
+        for candidate in CANDIDATES.get(pid, []):
+            if try_download(candidate, pid):
+                print(f"  ^ add this to config.yml as: "
+                      f"gallery_slug: \"{candidate}\"")
+                saved += 1
+                found = True
+                break
+        if not found:
+            print("  no candidate matched — still using generated placeholder art")
+            unresolved.append(pid)
+
+    print(f"\ntotal images saved/refreshed: {saved}")
+    if unresolved:
+        print("still unresolved:", ", ".join(unresolved))
     return 0
 
 

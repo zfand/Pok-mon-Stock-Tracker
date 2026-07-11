@@ -26,8 +26,13 @@ set:
 #   exclude:      extra reject-words for this product only
 #   max_price_usd: per-product spend cap for auto-checkout (falls back to
 #                  the global auto_checkout.max_price_usd)
-#   image:        artwork shown on the status page (generated SKU art in
-#                 docs/img/ — swap for real box-shot URLs when they exist)
+#   image:        artwork shown on the status page. Local file in docs/img/;
+#                 scripts/fetch_sku_images.py refreshes it from pokemon.com
+#                 when gallery_slug is set (falls back to generated art).
+#   gallery_slug: the product's slug on pokemon.com's official asset CDN
+#                 (from a URL like .../incrementals/2026/<slug>/<slug>-169-en.png,
+#                 found via the product gallery page). Empty = unknown; the
+#                 fetch workflow will probe guesses and log any it finds.
 #   watch_urls:   direct product-page URLs per retailer (most reliable
 #                 check by far — add them the moment a listing page exists)
 products:
@@ -39,14 +44,16 @@ products:
     must_include: [["30th"], ["elite trainer box", "etb"]]
     exclude: ["sleeve", "playmat", "binder"]
     image: "img/elite-trainer-box.png"
+    gallery_slug: "30th-celebration-elite-trainer-box"
     watch_urls: {}         # e.g. target: ["https://www.target.com/p/-/A-123"]
 
   - id: ultra-premium-collection
-    name: "Ultra-Premium Collection"
+    name: "Ultra-Premium Collection – Day & Night"
     alert: false
     purchase: false
     must_include: [["30th"], ["ultra-premium", "ultra premium"]]
     image: "img/ultra-premium-collection.png"
+    gallery_slug: "30th-celebration-ultra-premium-collections-day-night"
     watch_urls: {}
 
   - id: premium-figure-collection
@@ -55,6 +62,7 @@ products:
     purchase: false
     must_include: [["30th"], ["figure collection"]]
     image: "img/premium-figure-collection.png"
+    gallery_slug: ""
     watch_urls: {}
 
   - id: collector-chest
@@ -63,6 +71,7 @@ products:
     purchase: false
     must_include: [["30th"], ["collector chest", "collector's chest"]]
     image: "img/collector-chest.png"
+    gallery_slug: ""
     watch_urls: {}
 
   - id: pin-collection
@@ -71,6 +80,7 @@ products:
     purchase: false
     must_include: [["30th"], ["pin collection"]]
     image: "img/pin-collection.png"
+    gallery_slug: ""
     watch_urls: {}
 
   - id: mini-tin
@@ -79,6 +89,7 @@ products:
     purchase: false
     must_include: [["30th"], ["mini tin"]]
     image: "img/mini-tin.png"
+    gallery_slug: ""
     watch_urls: {}
 
   - id: poster-collection
@@ -87,6 +98,7 @@ products:
     purchase: false
     must_include: [["30th"], ["poster collection"]]
     image: "img/poster-collection.png"
+    gallery_slug: ""
     watch_urls: {}
 
   - id: booster-bundle
@@ -95,6 +107,7 @@ products:
     purchase: false
     must_include: [["30th"], ["booster bundle"]]
     image: "img/booster-bundle.png"
+    gallery_slug: ""
     watch_urls: {}
 
 retailers:
