@@ -1,19 +1,6 @@
 {
-  "generated_at": "2026-07-11T19:07:48+00:00",
+  "generated_at": "2026-07-11T19:29:24+00:00",
   "products": [
-    {
-      "slug": "2013",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/2013",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:06:38+00:00"
-    },
     {
       "slug": "2014",
       "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/2014",
@@ -25,7 +12,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:39+00:00"
+      "fetched_at": "2026-07-11T19:16:44+00:00"
     },
     {
       "slug": "2014-world-championships-decks",
@@ -38,7 +25,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:39+00:00"
+      "fetched_at": "2026-07-11T19:16:53+00:00"
     },
     {
       "slug": "2015",
@@ -51,7 +38,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:40+00:00"
+      "fetched_at": "2026-07-11T19:17:03+00:00"
     },
     {
       "slug": "2015-world-championships-decks",
@@ -64,7 +51,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:40+00:00"
+      "fetched_at": "2026-07-11T19:17:13+00:00"
     },
     {
       "slug": "2016",
@@ -77,7 +64,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:41+00:00"
+      "fetched_at": "2026-07-11T19:17:22+00:00"
     },
     {
       "slug": "2016-world-championships-deck",
@@ -90,7 +77,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:41+00:00"
+      "fetched_at": "2026-07-11T19:17:32+00:00"
     },
     {
       "slug": "2017",
@@ -103,7 +90,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:42+00:00"
+      "fetched_at": "2026-07-11T19:17:41+00:00"
     },
     {
       "slug": "2017-pokemon-tcg-world-championships-deck",
@@ -116,7 +103,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:42+00:00"
+      "fetched_at": "2026-07-11T19:17:51+00:00"
     },
     {
       "slug": "2018",
@@ -129,7 +116,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:43+00:00"
+      "fetched_at": "2026-07-11T19:18:01+00:00"
     },
     {
       "slug": "2018-pokemon-tcg-world-championships-decks",
@@ -142,7 +129,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:43+00:00"
+      "fetched_at": "2026-07-11T19:18:10+00:00"
     },
     {
       "slug": "2019",
@@ -155,7 +142,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:44+00:00"
+      "fetched_at": "2026-07-11T19:18:20+00:00"
     },
     {
       "slug": "2019-pokemon-tcg-world-championships-deck",
@@ -168,7 +155,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:44+00:00"
+      "fetched_at": "2026-07-11T19:18:29+00:00"
     },
     {
       "slug": "2020",
@@ -181,7 +168,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:45+00:00"
+      "fetched_at": "2026-07-11T19:18:39+00:00"
     },
     {
       "slug": "2021",
@@ -194,7 +181,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:45+00:00"
+      "fetched_at": "2026-07-11T19:18:49+00:00"
     },
     {
       "slug": "2022",
@@ -207,7 +194,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:46+00:00"
+      "fetched_at": "2026-07-11T19:18:58+00:00"
     },
     {
       "slug": "2022-pokemon-tcg-world-championships-decks",
@@ -220,7 +207,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:46+00:00"
+      "fetched_at": "2026-07-11T19:19:08+00:00"
     },
     {
       "slug": "2023",
@@ -233,7 +220,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:47+00:00"
+      "fetched_at": "2026-07-11T19:19:18+00:00"
     },
     {
       "slug": "2023-pokemon-tcg-world-championships-decks",
@@ -246,7 +233,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:47+00:00"
+      "fetched_at": "2026-07-11T19:19:27+00:00"
     },
     {
       "slug": "2024",
@@ -259,7 +246,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:47+00:00"
+      "fetched_at": "2026-07-11T19:19:37+00:00"
     },
     {
       "slug": "2024-pokemon-tcg-world-championships-decks",
@@ -272,7 +259,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:48+00:00"
+      "fetched_at": "2026-07-11T19:19:46+00:00"
     },
     {
       "slug": "2025",
@@ -285,7 +272,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:48+00:00"
+      "fetched_at": "2026-07-11T19:19:56+00:00"
     },
     {
       "slug": "2025-pokemon-tcg-world-championships-decks",
@@ -298,7 +285,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:49+00:00"
+      "fetched_at": "2026-07-11T19:20:06+00:00"
     },
     {
       "slug": "30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex",
@@ -311,7 +298,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:49+00:00"
+      "fetched_at": "2026-07-11T19:20:15+00:00"
     },
     {
       "slug": "30th-celebration-binder-collection",
@@ -324,7 +311,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:50+00:00"
+      "fetched_at": "2026-07-11T19:20:25+00:00"
     },
     {
       "slug": "30th-celebration-elite-trainer-box",
@@ -337,7 +324,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:50+00:00"
+      "fetched_at": "2026-07-11T19:20:34+00:00"
     },
     {
       "slug": "30th-celebration-figure-collection",
@@ -350,7 +337,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:51+00:00"
+      "fetched_at": "2026-07-11T19:20:44+00:00"
     },
     {
       "slug": "30th-celebration-pokemon-center-elite-trainer-box",
@@ -363,7 +350,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:51+00:00"
+      "fetched_at": "2026-07-11T19:20:54+00:00"
     },
     {
       "slug": "30th-celebration-poster-collection",
@@ -376,7 +363,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:52+00:00"
+      "fetched_at": "2026-07-11T19:21:03+00:00"
     },
     {
       "slug": "30th-celebration-sylveon-ex-box-and-greninja-ex-box",
@@ -389,7 +376,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:52+00:00"
+      "fetched_at": "2026-07-11T19:21:13+00:00"
     },
     {
       "slug": "30th-celebration-tech-sticker-collection",
@@ -402,7 +389,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:52+00:00"
+      "fetched_at": "2026-07-11T19:21:22+00:00"
     },
     {
       "slug": "30th-celebration-ultra-premium-collections-day-night",
@@ -415,7 +402,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:53+00:00"
+      "fetched_at": "2026-07-11T19:21:32+00:00"
     },
     {
       "slug": "alakazam-v-box",
@@ -428,7 +415,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:53+00:00"
+      "fetched_at": "2026-07-11T19:21:42+00:00"
     },
     {
       "slug": "alola-collection",
@@ -441,7 +428,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:54+00:00"
+      "fetched_at": "2026-07-11T19:21:51+00:00"
     },
     {
       "slug": "alola-trio-pin-blister",
@@ -454,7 +441,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:54+00:00"
+      "fetched_at": "2026-07-11T19:22:01+00:00"
     },
     {
       "slug": "alolan-marowak-gx-box",
@@ -467,7 +454,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:55+00:00"
+      "fetched_at": "2026-07-11T19:22:11+00:00"
     },
     {
       "slug": "alolan-raichu-figure-collection",
@@ -480,7 +467,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:55+00:00"
+      "fetched_at": "2026-07-11T19:22:20+00:00"
     },
     {
       "slug": "alolan-sandslash-gx-box",
@@ -493,7 +480,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:56+00:00"
+      "fetched_at": "2026-07-11T19:22:30+00:00"
     },
     {
       "slug": "ampharos-ex-battle-deck-lucario-ex-battle-deck",
@@ -506,7 +493,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:56+00:00"
+      "fetched_at": "2026-07-11T19:22:39+00:00"
     },
     {
       "slug": "annihilape-ex-box",
@@ -519,7 +506,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:57+00:00"
+      "fetched_at": "2026-07-11T19:22:49+00:00"
     },
     {
       "slug": "arcanine-break-evolution-box",
@@ -532,7 +519,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:57+00:00"
+      "fetched_at": "2026-07-11T19:22:59+00:00"
     },
     {
       "slug": "arceus-v-figure-collection",
@@ -545,7 +532,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:58+00:00"
+      "fetched_at": "2026-07-11T19:23:09+00:00"
     },
     {
       "slug": "arceus-vstar-premium-collection",
@@ -558,7 +545,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:58+00:00"
+      "fetched_at": "2026-07-11T19:23:18+00:00"
     },
     {
       "slug": "arceus-vstar-ultra-premium-collection",
@@ -571,7 +558,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:58+00:00"
+      "fetched_at": "2026-07-11T19:23:28+00:00"
     },
     {
       "slug": "armarouge-ex-premium-collection",
@@ -584,7 +571,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:59+00:00"
+      "fetched_at": "2026-07-11T19:23:37+00:00"
     },
     {
       "slug": "ash-greninja-ex-box",
@@ -597,7 +584,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:06:59+00:00"
+      "fetched_at": "2026-07-11T19:23:47+00:00"
     },
     {
       "slug": "aurorus-ex-box",
@@ -610,7 +597,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:00+00:00"
+      "fetched_at": "2026-07-11T19:23:57+00:00"
     },
     {
       "slug": "autumn-2016-collector-chest",
@@ -623,7 +610,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:00+00:00"
+      "fetched_at": "2026-07-11T19:24:06+00:00"
     },
     {
       "slug": "azure-legends-tin",
@@ -636,7 +623,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:01+00:00"
+      "fetched_at": "2026-07-11T19:24:16+00:00"
     },
     {
       "slug": "basic-energy-box",
@@ -649,7 +636,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:01+00:00"
+      "fetched_at": "2026-07-11T19:24:26+00:00"
     },
     {
       "slug": "battle-arena-decks-black-kyurem-vs-white-kyurem",
@@ -662,7 +649,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:02+00:00"
+      "fetched_at": "2026-07-11T19:24:35+00:00"
     },
     {
       "slug": "battle-arena-decks-mewtwo-vs-darkrai",
@@ -675,7 +662,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:02+00:00"
+      "fetched_at": "2026-07-11T19:24:45+00:00"
     },
     {
       "slug": "battle-arena-decks-rayquaza-gx-vs-ultra-necrozma-gx",
@@ -688,7 +675,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:03+00:00"
+      "fetched_at": "2026-07-11T19:24:54+00:00"
     },
     {
       "slug": "battle-arena-decks-rayquaza-vs-keldeo",
@@ -701,7 +688,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:03+00:00"
+      "fetched_at": "2026-07-11T19:25:04+00:00"
     },
     {
       "slug": "battle-heart-tin",
@@ -714,7 +701,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:04+00:00"
+      "fetched_at": "2026-07-11T19:25:14+00:00"
     },
     {
       "slug": "bewear-gx-box",
@@ -727,7 +714,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:04+00:00"
+      "fetched_at": "2026-07-11T19:25:23+00:00"
     },
     {
       "slug": "blastoise-gx-premium-collection",
@@ -740,7 +727,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:05+00:00"
+      "fetched_at": "2026-07-11T19:25:33+00:00"
     },
     {
       "slug": "bloodmoon-ursaluna-ex-box",
@@ -753,7 +740,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:05+00:00"
+      "fetched_at": "2026-07-11T19:25:43+00:00"
     },
     {
       "slug": "boltund-v-box",
@@ -766,7 +753,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:06+00:00"
+      "fetched_at": "2026-07-11T19:25:52+00:00"
     },
     {
       "slug": "break-evolution-box",
@@ -779,7 +766,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:06+00:00"
+      "fetched_at": "2026-07-11T19:26:02+00:00"
     },
     {
       "slug": "bw-kalos-figure-box",
@@ -792,7 +779,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:06+00:00"
+      "fetched_at": "2026-07-11T19:26:11+00:00"
     },
     {
       "slug": "bw-kalos-pin-blister",
@@ -805,7 +792,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:07+00:00"
+      "fetched_at": "2026-07-11T19:26:21+00:00"
     },
     {
       "slug": "bw-legendary-dragons-collection",
@@ -818,7 +805,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:07+00:00"
+      "fetched_at": "2026-07-11T19:26:31+00:00"
     },
     {
       "slug": "bw-sylveon-collection",
@@ -831,7 +818,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:08+00:00"
+      "fetched_at": "2026-07-11T19:26:40+00:00"
     },
     {
       "slug": "celebrations-collection-dragapult-prime",
@@ -844,7 +831,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:08+00:00"
+      "fetched_at": "2026-07-11T19:26:50+00:00"
     },
     {
       "slug": "celebrations-collection-lances-charizard-v-and-celebrations-collection-dark-sylveon-v",
@@ -857,7 +844,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:09+00:00"
+      "fetched_at": "2026-07-11T19:27:00+00:00"
     },
     {
       "slug": "celebrations-collector-chest",
@@ -870,7 +857,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:09+00:00"
+      "fetched_at": "2026-07-11T19:27:09+00:00"
     },
     {
       "slug": "celebrations-deluxe-pin-collection",
@@ -883,7 +870,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:10+00:00"
+      "fetched_at": "2026-07-11T19:27:19+00:00"
     },
     {
       "slug": "celebrations-elite-trainer-box",
@@ -896,7 +883,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:10+00:00"
+      "fetched_at": "2026-07-11T19:27:28+00:00"
     },
     {
       "slug": "celebrations-premium-figure-collection-pikachu-vmax",
@@ -909,7 +896,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:11+00:00"
+      "fetched_at": "2026-07-11T19:27:38+00:00"
     },
     {
       "slug": "celebrations-prime-collection",
@@ -922,7 +909,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:11+00:00"
+      "fetched_at": "2026-07-11T19:27:48+00:00"
     },
     {
       "slug": "celebrations-special-collection-pikachu-v-union",
@@ -935,7 +922,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:11+00:00"
+      "fetched_at": "2026-07-11T19:27:57+00:00"
     },
     {
       "slug": "celebrations-special-collection-v-memories",
@@ -948,7 +935,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:12+00:00"
+      "fetched_at": "2026-07-11T19:28:07+00:00"
     },
     {
       "slug": "celebrations-ultra-premium-collection",
@@ -961,7 +948,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:12+00:00"
+      "fetched_at": "2026-07-11T19:28:16+00:00"
     },
     {
       "slug": "champions-path-collection-dubwool-v",
@@ -974,7 +961,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:13+00:00"
+      "fetched_at": "2026-07-11T19:28:26+00:00"
     },
     {
       "slug": "champions-path-collection-hatterene-v",
@@ -987,7 +974,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:13+00:00"
+      "fetched_at": "2026-07-11T19:28:36+00:00"
     },
     {
       "slug": "champions-path-elite-trainer-box",
@@ -1000,7 +987,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:14+00:00"
+      "fetched_at": "2026-07-11T19:28:45+00:00"
     },
     {
       "slug": "champions-path-pin-collection-ballonlea-spikemuth-and-hammerlocke-gyms",
@@ -1013,7 +1000,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:14+00:00"
+      "fetched_at": "2026-07-11T19:28:55+00:00"
     },
     {
       "slug": "champions-path-pin-collections-turffield-hulbury-and-motostoke-gyms",
@@ -1026,7 +1013,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:15+00:00"
+      "fetched_at": "2026-07-11T19:29:05+00:00"
     },
     {
       "slug": "champions-path-premium-collection-marnie",
@@ -1039,917 +1026,20 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:15+00:00"
+      "fetched_at": "2026-07-11T19:29:14+00:00"
     },
     {
-      "slug": "champions-path-special-collection-marnie",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/champions-path-special-collection-marnie",
-      "name": null,
+      "slug": "2013",
+      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/2013",
+      "name": "Pok\u00e9mon TCG Product Gallery",
       "release_date": null,
       "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
+      "image": "https://www.pokemon.com/static-assets/app/static3/img/og-default-image.jpeg",
+      "set_slug": "2013",
+      "set_guessed": true,
+      "blocked": false,
       "error": null,
-      "fetched_at": "2026-07-11T19:07:16+00:00"
-    },
-    {
-      "slug": "champions-path-special-pin-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/champions-path-special-pin-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:16+00:00"
-    },
-    {
-      "slug": "charizard-ex-box-fire-blast",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-box-fire-blast",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:17+00:00"
-    },
-    {
-      "slug": "charizard-ex-league-battle-deck",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-league-battle-deck",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:17+00:00"
-    },
-    {
-      "slug": "charizard-ex-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:17+00:00"
-    },
-    {
-      "slug": "charizard-ex-special-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-special-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:18+00:00"
-    },
-    {
-      "slug": "charizard-ex-super-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-super-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:18+00:00"
-    },
-    {
-      "slug": "charizard-gx-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-gx-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:19+00:00"
-    },
-    {
-      "slug": "collector-bundle",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-bundle",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:19+00:00"
-    },
-    {
-      "slug": "collector-chest-2014",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-2014",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:20+00:00"
-    },
-    {
-      "slug": "collector-chest-2015",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-2015",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:20+00:00"
-    },
-    {
-      "slug": "collector-chest-back-to-school-2024",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-back-to-school-2024",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:21+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2016",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2016",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:21+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2018",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2018",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:22+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2019",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2019",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:22+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2020",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2020",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:23+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2022-hisuian-voltorb-hisuian-growlithe-hisuian-sneasel",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2022-hisuian-voltorb-hisuian-growlithe-hisuian-sneasel",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:23+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2023",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2023",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:23+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2024",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2024",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:24+00:00"
-    },
-    {
-      "slug": "collector-chest-fall-2025",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-fall-2025",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:24+00:00"
-    },
-    {
-      "slug": "collector-chest-spring-2017",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-spring-2017",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:25+00:00"
-    },
-    {
-      "slug": "collector-chest-spring-2018",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-spring-2018",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:25+00:00"
-    },
-    {
-      "slug": "collector-chest-spring-2020",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-spring-2020",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:26+00:00"
-    },
-    {
-      "slug": "collector-chest-spring-2021-single-strike-tepig-rapid-strike-shinx",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-spring-2021-single-strike-tepig-rapid-strike-shinx",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:26+00:00"
-    },
-    {
-      "slug": "collector-chest-spring-2022-rowlet-cyndaquil-oshawott",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-spring-2022-rowlet-cyndaquil-oshawott",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:27+00:00"
-    },
-    {
-      "slug": "collector-chest-summer-2023-sprigatito-fuecoco-quaxly",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collector-chest-summer-2023-sprigatito-fuecoco-quaxly",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:27+00:00"
-    },
-    {
-      "slug": "collectors-pin-3-pack-articuno-zapdos-moltres",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collectors-pin-3-pack-articuno-zapdos-moltres",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:28+00:00"
-    },
-    {
-      "slug": "collectors-pin-3-pack-blister-mega-venusaur-and-mega-blastoise",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collectors-pin-3-pack-blister-mega-venusaur-and-mega-blastoise",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:28+00:00"
-    },
-    {
-      "slug": "collectors-pin-3-pack-blister-raikou-entei-or-suicune",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collectors-pin-3-pack-blister-raikou-entei-or-suicune",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:29+00:00"
-    },
-    {
-      "slug": "collectors-pin-3-pack-blister-volcanion-and-shiny-mega-gardevoir",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/collectors-pin-3-pack-blister-volcanion-and-shiny-mega-gardevoir",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:29+00:00"
-    },
-    {
-      "slug": "combined-powers-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/combined-powers-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:29+00:00"
-    },
-    {
-      "slug": "copperajah-v-box",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/copperajah-v-box",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:30+00:00"
-    },
-    {
-      "slug": "crown-zenith-collections-regieleki-v-regidrago-v",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-collections-regieleki-v-regidrago-v",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:30+00:00"
-    },
-    {
-      "slug": "crown-zenith-elite-trainer-box",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-elite-trainer-box",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:31+00:00"
-    },
-    {
-      "slug": "crown-zenith-pin-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-pin-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:31+00:00"
-    },
-    {
-      "slug": "crown-zenith-pokemon-center-elite-trainer-box-plus",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-pokemon-center-elite-trainer-box-plus",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:32+00:00"
-    },
-    {
-      "slug": "crown-zenith-premium-collection-sea-sky",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-premium-collection-sea-sky",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:32+00:00"
-    },
-    {
-      "slug": "crown-zenith-premium-figure-collection-shiny-zacian-zamazenta",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-premium-figure-collection-shiny-zacian-zamazenta",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:33+00:00"
-    },
-    {
-      "slug": "crown-zenith-premium-playmat-collection-morpeko-v-union",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-premium-playmat-collection-morpeko-v-union",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:33+00:00"
-    },
-    {
-      "slug": "crown-zenith-special-collection-pikachu-vmax",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-special-collection-pikachu-vmax",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:34+00:00"
-    },
-    {
-      "slug": "crown-zenith-tin",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/crown-zenith-tin",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:34+00:00"
-    },
-    {
-      "slug": "cyclizar-ex-box",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/cyclizar-ex-box",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:35+00:00"
-    },
-    {
-      "slug": "cynthias-garchomp-ex-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/cynthias-garchomp-ex-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:35+00:00"
-    },
-    {
-      "slug": "cyrus-and-klara-premium-tournament-collections",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/cyrus-and-klara-premium-tournament-collections",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:36+00:00"
-    },
-    {
-      "slug": "darkrai-vstar-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/darkrai-vstar-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:36+00:00"
-    },
-    {
-      "slug": "decidueye-gx-incineroar-gx-and-primarina-gx-premium-collections",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/decidueye-gx-incineroar-gx-and-primarina-gx-premium-collections",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:36+00:00"
-    },
-    {
-      "slug": "deck-shield-solgaleo-and-lunala",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/deck-shield-solgaleo-and-lunala",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:37+00:00"
-    },
-    {
-      "slug": "deck-shield-tapu-koko-tapu-fini",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/deck-shield-tapu-koko-tapu-fini",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:37+00:00"
-    },
-    {
-      "slug": "decks",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/decks",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:38+00:00"
-    },
-    {
-      "slug": "deoxys-v-battle-deck-and-zeraora-v-battle-deck",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/deoxys-v-battle-deck-and-zeraora-v-battle-deck",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:38+00:00"
-    },
-    {
-      "slug": "deoxys-zeraora-vmax-vstar-battle-box",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/deoxys-zeraora-vmax-vstar-battle-box",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:39+00:00"
-    },
-    {
-      "slug": "detective-pikachu-cafe-figure-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/detective-pikachu-cafe-figure-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:39+00:00"
-    },
-    {
-      "slug": "detective-pikachu-charizard-gx-case-file",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/detective-pikachu-charizard-gx-case-file",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:40+00:00"
-    },
-    {
-      "slug": "detective-pikachu-collector-chest",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/detective-pikachu-collector-chest",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:40+00:00"
-    },
-    {
-      "slug": "detective-pikachu-greninja-gx-case-file",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/detective-pikachu-greninja-gx-case-file",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:41+00:00"
-    },
-    {
-      "slug": "detective-pikachu-on-the-case-figure-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/detective-pikachu-on-the-case-figure-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:41+00:00"
-    },
-    {
-      "slug": "detective-pikachu-tin",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/detective-pikachu-tin",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:41+00:00"
-    },
-    {
-      "slug": "divergent-powers-tin",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/divergent-powers-tin",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:42+00:00"
-    },
-    {
-      "slug": "dragapult-ex-league-battle-deck",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragapult-ex-league-battle-deck",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:42+00:00"
-    },
-    {
-      "slug": "dragon-majesty-collection-ultra-necrozma-gx",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-collection-ultra-necrozma-gx",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:43+00:00"
-    },
-    {
-      "slug": "dragon-majesty-elite-trainer-box",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-elite-trainer-box",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:43+00:00"
-    },
-    {
-      "slug": "dragon-majesty-figure-collection-ultra-necrozma-gx",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-figure-collection-ultra-necrozma-gx",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:44+00:00"
-    },
-    {
-      "slug": "dragon-majesty-legends-of-unova-gx-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-legends-of-unova-gx-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:44+00:00"
-    },
-    {
-      "slug": "dragon-majesty-legends-of-unova-gx-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-legends-of-unova-gx-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:45+00:00"
-    },
-    {
-      "slug": "dragon-majesty-pin-collections-latias-and-latios",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-pin-collections-latias-and-latios",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:45+00:00"
-    },
-    {
-      "slug": "dragon-majesty-premium-powers-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-premium-powers-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:46+00:00"
-    },
-    {
-      "slug": "dragon-majesty-special-collections-salamence-gx-white-kyurem-gx",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-special-collections-salamence-gx-white-kyurem-gx",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:46+00:00"
-    },
-    {
-      "slug": "dragon-majesty-super-premium-collection",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragon-majesty-super-premium-collection",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:47+00:00"
-    },
-    {
-      "slug": "dragonite-ex-box",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragonite-ex-box",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:47+00:00"
-    },
-    {
-      "slug": "dragonite-v-box",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/dragonite-v-box",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:07:47+00:00"
+      "fetched_at": "2026-07-11T19:16:40+00:00"
     }
   ]
 }
