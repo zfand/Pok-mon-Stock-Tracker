@@ -35,7 +35,8 @@ from playwright.sync_api import sync_playwright
 
 from gallery_parse import (
     derive_set_slug, extract_image, extract_jsonld_products, extract_name,
-    extract_release_date, is_sitemap_index, looks_blocked, parse_sitemap_locs,
+    extract_release_date, is_sitemap_index, looks_blocked, merge_records,
+    parse_sitemap_locs,
 )
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -236,10 +237,12 @@ def main() -> int:
 
     check_169_theory(new_records)
 
-    # Merge: this run's results overwrite their slugs; everything else
-    # already on file (not touched this run) carries forward unchanged.
-    existing_by_slug.update({r["slug"]: r for r in new_records})
-    all_records = sorted(existing_by_slug.values(),
+    # Merge: this run's results land in their slugs, unless a slug already
+    # had good data and today's fetch came back blocked/empty (a transient
+    # block saying nothing about yesterday's data being wrong). Everything
+    # else already on file carries forward unchanged.
+    merged_by_slug = merge_records(existing_by_slug, new_records)
+    all_records = sorted(merged_by_slug.values(),
                          key=lambda r: (r["release_date"] or "9999-99-99",
                                        r["set_slug"] or "", r["slug"]))
 

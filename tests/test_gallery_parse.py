@@ -2,7 +2,8 @@ import json
 
 from scripts.gallery_parse import (
     derive_set_slug, extract_image, extract_jsonld_products, extract_name,
-    extract_release_date, is_sitemap_index, looks_blocked, parse_sitemap_locs,
+    extract_release_date, is_sitemap_index, looks_blocked, merge_records,
+    parse_sitemap_locs,
 )
 
 
@@ -153,3 +154,52 @@ def test_is_sitemap_index_true():
 
 def test_is_sitemap_index_false_for_urlset():
     assert not is_sitemap_index("<urlset><url><loc>x</loc></url></urlset>")
+
+
+# --- merge_records --------------------------------------------------------
+
+def _good(slug, **overrides):
+    rec = {"slug": slug, "name": "Elite Trainer Box", "release_date": "2026-09-16",
+           "release_date_raw": "September 16, 2026", "image": "https://x/y.png",
+           "set_slug": "30th-celebration", "set_guessed": False, "blocked": False,
+           "error": None, "fetched_at": "t1"}
+    rec.update(overrides)
+    return rec
+
+
+def _blocked(slug, **overrides):
+    rec = {"slug": slug, "name": None, "release_date": None, "release_date_raw": None,
+           "image": None, "set_slug": None, "set_guessed": None, "blocked": True,
+           "error": None, "fetched_at": "t2"}
+    rec.update(overrides)
+    return rec
+
+
+def test_merge_does_not_let_a_transient_block_clobber_good_data():
+    existing = {"etb": _good("etb")}
+    merged = merge_records(existing, [_blocked("etb")])
+    assert merged["etb"]["release_date"] == "2026-09-16"  # kept, not overwritten
+
+
+def test_merge_updates_when_new_result_is_also_useful():
+    existing = {"etb": _good("etb", release_date="2026-09-01")}
+    newer = _good("etb", release_date="2026-09-16")
+    merged = merge_records(existing, [newer])
+    assert merged["etb"]["release_date"] == "2026-09-16"
+
+
+def test_merge_accepts_first_success_for_a_previously_blocked_slug():
+    existing = {"etb": _blocked("etb")}
+    merged = merge_records(existing, [_good("etb")])
+    assert merged["etb"]["release_date"] == "2026-09-16"
+
+
+def test_merge_adds_new_slugs_not_previously_seen():
+    merged = merge_records({}, [_good("etb")])
+    assert "etb" in merged
+
+
+def test_merge_leaves_untouched_slugs_from_other_runs_alone():
+    existing = {"etb": _good("etb"), "other-slug": _blocked("other-slug")}
+    merged = merge_records(existing, [_good("etb", release_date="2026-10-01")])
+    assert merged["other-slug"] == existing["other-slug"]

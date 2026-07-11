@@ -164,3 +164,25 @@ def parse_sitemap_locs(xml_text: str) -> list[str]:
 
 def is_sitemap_index(xml_text: str) -> bool:
     return '<sitemapindex' in xml_text[:2000]
+
+
+def _is_useful(record: dict) -> bool:
+    return bool(record.get("name") or record.get("release_date") or record.get("image"))
+
+
+def merge_records(existing: dict[str, dict], new_records: list[dict]) -> dict[str, dict]:
+    """Merge this run's fetch results into everything previously recorded.
+
+    Never lets a transient block/error on a re-scan (seed slugs are
+    refetched every run) clobber a previously-resolved record — the site's
+    bot mitigation is probabilistic, seen to block the very same slug that
+    had just succeeded minutes earlier, so a blocked result today says
+    nothing about yesterday's good data being wrong.
+    """
+    merged = dict(existing)
+    for rec in new_records:
+        prev = merged.get(rec["slug"])
+        if prev and _is_useful(prev) and not _is_useful(rec):
+            continue
+        merged[rec["slug"]] = rec
+    return merged
