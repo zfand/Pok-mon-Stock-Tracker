@@ -1,10 +1,12 @@
 # Pokémon TCG preorder tracker configuration
 
 set:
-  name: "Pokémon TCG 30th Anniversary Celebrations"
+  # Official retail naming appears to be "30th Celebration" (per listings on
+  # other trackers), not "30th Anniversary Celebrations".
+  name: "Pokémon TCG 30th Celebration"
   # Broad query sent to each retailer's search; results are then matched
   # against the per-product rules below.
-  search_query: "pokemon tcg 30th anniversary"
+  search_query: "pokemon tcg 30th celebration"
   # Titles containing any of these never match anything
   exclude: []
 
@@ -21,8 +23,8 @@ set:
 #   exclude:      extra reject-words for this product only
 #   max_price_usd: per-product spend cap for auto-checkout (falls back to
 #                  the global auto_checkout.max_price_usd)
-#   image:        artwork shown on the status page. Placeholder Celebrations
-#                 card art for now — paste real box-shot URLs when they exist.
+#   image:        artwork shown on the status page (generated SKU art in
+#                 docs/img/ — swap for real box-shot URLs when they exist)
 #   watch_urls:   direct product-page URLs per retailer (most reliable
 #                 check by far — add them the moment a listing page exists)
 products:
@@ -33,7 +35,7 @@ products:
     max_price_usd: 80
     must_include: [["30th"], ["elite trainer box", "etb"]]
     exclude: ["sleeve", "playmat", "binder"]
-    image: "https://images.pokemontcg.io/cel25/2_hires.png"
+    image: "img/elite-trainer-box.png"
     watch_urls: {}         # e.g. target: ["https://www.target.com/p/-/A-123"]
 
   - id: ultra-premium-collection
@@ -41,7 +43,7 @@ products:
     alert: false
     purchase: false
     must_include: [["30th"], ["ultra-premium", "ultra premium"]]
-    image: "https://images.pokemontcg.io/cel25/4_hires.png"
+    image: "img/ultra-premium-collection.png"
     watch_urls: {}
 
   - id: premium-figure-collection
@@ -49,7 +51,7 @@ products:
     alert: false
     purchase: false
     must_include: [["30th"], ["figure collection"]]
-    image: "https://images.pokemontcg.io/cel25/5_hires.png"
+    image: "img/premium-figure-collection.png"
     watch_urls: {}
 
   - id: collector-chest
@@ -57,7 +59,7 @@ products:
     alert: false
     purchase: false
     must_include: [["30th"], ["collector chest", "collector's chest"]]
-    image: "https://images.pokemontcg.io/cel25/8_hires.png"
+    image: "img/collector-chest.png"
     watch_urls: {}
 
   - id: pin-collection
@@ -65,7 +67,7 @@ products:
     alert: false
     purchase: false
     must_include: [["30th"], ["pin collection"]]
-    image: "https://images.pokemontcg.io/cel25/11_hires.png"
+    image: "img/pin-collection.png"
     watch_urls: {}
 
   - id: mini-tin
@@ -73,7 +75,7 @@ products:
     alert: false
     purchase: false
     must_include: [["30th"], ["mini tin"]]
-    image: "https://images.pokemontcg.io/cel25/15_hires.png"
+    image: "img/mini-tin.png"
     watch_urls: {}
 
   - id: poster-collection
@@ -81,7 +83,7 @@ products:
     alert: false
     purchase: false
     must_include: [["30th"], ["poster collection"]]
-    image: "https://images.pokemontcg.io/cel25/17_hires.png"
+    image: "img/poster-collection.png"
     watch_urls: {}
 
   - id: booster-bundle
@@ -89,7 +91,7 @@ products:
     alert: false
     purchase: false
     must_include: [["30th"], ["booster bundle"]]
-    image: "https://images.pokemontcg.io/cel25/25_hires.png"
+    image: "img/booster-bundle.png"
     watch_urls: {}
 
 retailers:

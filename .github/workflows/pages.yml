@@ -31,6 +31,7 @@ jobs:
           mkdir -p _site
           cp -r docs/* _site/
           cp state/seen.json _site/state.json 2>/dev/null || echo '{"listings":{}}' > _site/state.json
+          echo "rip.fand.app" > _site/CNAME
           pip install --quiet PyYAML
           python -c "import json, yaml; json.dump(yaml.safe_load(open('config.yml'))['products'], open('_site/products.json', 'w'))"
       - uses: actions/configure-pages@v5
