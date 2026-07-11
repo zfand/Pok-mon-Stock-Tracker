@@ -1,0 +1,35 @@
+name: Scan product gallery
+
+on:
+  schedule:
+    # Once a day — release dates and product images don't change minute to
+    # minute, unlike stock (see check-stock.yml for that cron).
+    - cron: "17 8 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install requests pyyaml
+      - run: python scripts/scan_gallery.py
+      - name: Commit gallery data
+        run: |
+          if [ -n "$(git status --porcelain data/gallery.json)" ]; then
+            git config user.name "stock-tracker[bot]"
+            git config user.email "actions@users.noreply.github.com"
+            git add data/gallery.json
+            git commit -m "chore: refresh product gallery scan"
+            git push
+          else
+            echo "No gallery data changes."
+          fi
