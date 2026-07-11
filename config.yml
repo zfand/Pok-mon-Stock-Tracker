@@ -116,6 +116,7 @@ products:
     must_include: [["30th"], ["battle deck"], ["espeon", "umbreon"]]
     image: "img/battle-decks-espeon-umbreon.png"
     gallery_slug: "30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex"
+    image_slug: "30th-celebration-battle-deck-espeon-ex-umbreon-ex"
     watch_urls: {}
 
   - id: poster-collection
