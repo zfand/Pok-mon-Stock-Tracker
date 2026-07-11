@@ -6,6 +6,16 @@ on:
       - "docs/**"
       - "config.yml"
       - ".github/workflows/pages.yml"
+  # Commits made by the other bots (Check stock's state commit, Fetch SKU
+  # images, Scan product gallery) use the default GITHUB_TOKEN, and GitHub
+  # deliberately does NOT let a GITHUB_TOKEN-authored push fire other
+  # workflows' `on: push` triggers (anti-recursion safeguard) — so without
+  # this, a new stock status or a freshly-fetched product image would sit
+  # committed but never make it to the live site. workflow_run is exempt
+  # from that restriction, so this is the actual fix, not a workaround.
+  workflow_run:
+    workflows: ["Check stock", "Fetch SKU images", "Scan product gallery"]
+    types: [completed]
   workflow_dispatch: {}
 
 permissions:
@@ -19,6 +29,10 @@ concurrency:
 
 jobs:
   deploy:
+    # For workflow_run events, only redeploy if the upstream run actually
+    # succeeded — a failed stock-check/fetch/scan run didn't commit
+    # anything new, so there's nothing to redeploy.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
@@ -26,6 +40,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Pin to the exact commit the triggering workflow produced, rather
+          # than whatever the branch tip happens to be by the time this job
+          # starts (avoids a race if two bot commits land close together).
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
       - name: Assemble site
         run: |
           mkdir -p _site
