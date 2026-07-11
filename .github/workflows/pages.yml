@@ -33,7 +33,7 @@ jobs:
           cp state/seen.json _site/state.json 2>/dev/null || echo '{"listings":{}}' > _site/state.json
           echo "rip.fand.app" > _site/CNAME
           pip install --quiet PyYAML
-          python -c "import json, yaml; json.dump(yaml.safe_load(open('config.yml'))['products'], open('_site/products.json', 'w'))"
+          python -c "import json, yaml; c = yaml.safe_load(open('config.yml')); json.dump({'set': c['set'], 'products': c['products']}, open('_site/products.json', 'w'))"
       - uses: actions/configure-pages@v5
         with:
           enablement: true

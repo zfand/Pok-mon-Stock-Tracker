@@ -69,13 +69,26 @@
   .wrap { max-width: 1080px; margin: 0 auto; padding: 44px 20px 80px; }
   header { text-align: center; margin-bottom: 40px; }
   header .set-logo { max-width: 300px; width: 70%; filter: drop-shadow(0 8px 24px rgba(0,0,0,.6)); }
-  h1 {
-    font-size: clamp(1.5rem, 4vw, 2.4rem);
-    margin-top: 16px; letter-spacing: .02em;
+  .brand {
+    margin-top: 18px; font-weight: 700;
+    font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+    letter-spacing: .28em; text-transform: uppercase;
     background: linear-gradient(90deg, var(--gold), #fff2c9, var(--gold));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   header p { color: var(--muted); margin-top: 10px; }
+  .setline { font-size: 1.15rem; color: var(--text) !important; }
+  .countdown { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+  .cd-box {
+    min-width: 84px; padding: 12px 10px 9px; border-radius: 14px;
+    background: var(--panel); border: 1px solid var(--panel-border);
+  }
+  .cd-box span { display: block; font-size: 2.1rem; font-weight: 800;
+    font-variant-numeric: tabular-nums; color: var(--gold); line-height: 1; }
+  .cd-box label { display: block; margin-top: 6px; font-size: .68rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .release { font-size: .95rem; }
+  @media (max-width: 480px) { .cd-box { min-width: 66px; } .cd-box span { font-size: 1.6rem; } }
   .pill {
     display: inline-flex; align-items: center; gap: 8px;
     margin-top: 14px; padding: 8px 18px; border-radius: 999px;
@@ -149,9 +162,18 @@
 
 <div class="wrap">
   <header>
-    <h1>Ripping Packs</h1>
-    <p>Pokémon TCG · 30th Celebration — every product in the set, watched
-       around the clock across six retailers.</p>
+    <img class="set-logo" alt="Celebrations"
+         src="https://images.pokemontcg.io/cel25/logo.png"
+         onerror="this.style.display='none'">
+    <div class="brand">✦ Ripping Packs ✦</div>
+    <p class="setline" id="setLine">Pokémon TCG 30th Celebration</p>
+    <div class="countdown" id="countdown" hidden>
+      <div class="cd-box"><span id="cd-d">–</span><label>days</label></div>
+      <div class="cd-box"><span id="cd-h">–</span><label>hours</label></div>
+      <div class="cd-box"><span id="cd-m">–</span><label>min</label></div>
+      <div class="cd-box"><span id="cd-s">–</span><label>sec</label></div>
+    </div>
+    <p class="release" id="releaseLine">Release date TBA</p>
     <span class="pill"><span class="dot"></span>Checks run every ~10 minutes via GitHub Actions</span>
   </header>
 
@@ -210,12 +232,49 @@
     'Amazon':         q => `https://www.amazon.com/s?k=${encodeURIComponent(q)}`,
   };
 
-  // products.json + state.json are generated from config.yml / the tracker's
-  // state at deploy time.
+  // --- release countdown -------------------------------------------------
+  function startCountdown(setInfo) {
+    const line = document.getElementById('releaseLine');
+    const box = document.getElementById('countdown');
+    if (setInfo.name) document.getElementById('setLine').textContent = setInfo.name;
+    const raw = (setInfo.release_date || '').trim();
+    if (!raw) {
+      line.textContent = 'Release date TBA — the countdown starts the moment it’s announced';
+      return;
+    }
+    const target = new Date(raw.includes('T') ? raw : raw + 'T00:00:00');
+    if (isNaN(target)) { line.textContent = 'Release date: ' + raw; return; }
+    line.textContent = 'Releases ' + target.toLocaleDateString(undefined,
+      { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    box.hidden = false;
+    const ids = ['cd-d', 'cd-h', 'cd-m', 'cd-s'].map(i => document.getElementById(i));
+    function tick() {
+      let ms = target - Date.now();
+      if (ms <= 0) {
+        box.innerHTML = '<div class="cd-box" style="min-width:auto;padding:12px 22px 9px">' +
+          '<span>IT’S LIVE</span><label>go go go</label></div>';
+        line.textContent = 'Released ' + target.toLocaleDateString();
+        clearInterval(timer);
+        return;
+      }
+      const d = Math.floor(ms / 864e5); ms -= d * 864e5;
+      const h = Math.floor(ms / 36e5);  ms -= h * 36e5;
+      const m = Math.floor(ms / 6e4);   ms -= m * 6e4;
+      const s = Math.floor(ms / 1e3);
+      [d, h, m, s].forEach((v, i) => ids[i].textContent = String(v).padStart(2, '0'));
+    }
+    tick();
+    const timer = setInterval(tick, 1000);
+  }
+
+  // products.json ({set, products}) + state.json are generated from
+  // config.yml / the tracker's state at deploy time.
   Promise.all([
     fetch('products.json').then(r => r.ok ? r.json() : []),
     fetch('state.json').then(r => r.ok ? r.json() : null).catch(() => null),
-  ]).then(([products, state]) => {
+  ]).then(([data, state]) => {
+    const products = Array.isArray(data) ? data : (data.products || []);
+    startCountdown(Array.isArray(data) ? {} : (data.set || {}));
     const catalog = document.getElementById('catalog');
     catalog.innerHTML = '';
     const listings = (state && state.listings) || {};
