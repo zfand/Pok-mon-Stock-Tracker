@@ -6,14 +6,15 @@ This is a pure data-collection pass — it does NOT touch config.yml or the
 live status page. See the tracked task "Refactor status page: release-date
 schedule view grouped by set" for what's meant to consume this data next.
 
-Deliberately does not try to defeat the product-gallery *listing* page's
-bot wall (confirmed earlier: even headless Chromium there gets served a
-challenge page, not product tiles — see git history on fetch_sku_images.py).
-Individual product pages (/us/pokemon-tcg/product-gallery/<slug>) are a
-different, apparently unwalled surface, seeded from (a) pokemon.com's
-sitemap when reachable, and (b) gallery_slug values already confirmed in
-config.yml. If sitemap discovery also comes up empty, that's logged
-explicitly rather than silently producing a thin result set.
+Individual product pages (/us/pokemon-tcg/product-gallery/<slug>) are
+fetched with headless Chromium, not plain HTTP: a one-off diagnostic
+confirmed plain `requests` gets walled on every single one of these pages
+(100% block rate across 150 real slugs found via sitemap), while a real
+rendered browser loads them fine. This mirrors the product-gallery
+*listing* page, which is walled for everyone including headless Chromium —
+that surface is not attempted here at all; only individual product pages.
+Sitemap discovery is the crawl seed, plus any gallery_slug values already
+confirmed in config.yml.
 """
 
 import datetime
@@ -23,6 +24,7 @@ import time
 
 import requests
 import yaml
+from playwright.sync_api import sync_playwright
 
 from gallery_parse import (
     derive_set_slug, extract_image, extract_jsonld_products, extract_name,
@@ -39,8 +41,10 @@ SITEMAP_CANDIDATES = [
     "https://www.pokemon.com/us/sitemap.xml",
 ]
 MAX_CHILD_SITEMAPS = 20
-MAX_PRODUCT_PAGES = 150
-REQUEST_DELAY_SEC = 0.4  # be a polite crawler, not a hammer
+MAX_PRODUCT_PAGES = 80   # each page load takes several seconds via a real browser
+PAGE_WAIT_MS = 3_500
+RETRY_WAIT_MS = 6_000    # one retry with a longer wait if the first load looks too thin
+MIN_HTML_LEN = 5_000
 
 
 def discover_via_sitemap() -> list[str]:
@@ -72,7 +76,7 @@ def discover_via_sitemap() -> list[str]:
                     for u in parse_sitemap_locs(cr.text):
                         if "/product-gallery/" in u:
                             slugs.add(u.rstrip("/").rsplit("/", 1)[-1])
-                time.sleep(REQUEST_DELAY_SEC)
+                time.sleep(0.3)
         else:
             locs = parse_sitemap_locs(r.text)
             for u in locs:
@@ -83,9 +87,8 @@ def discover_via_sitemap() -> list[str]:
     return sorted(slugs)
 
 
-def fetch_product_page(slug: str) -> dict:
-    url = GALLERY_BASE + slug
-    record = {
+def _new_record(slug: str, url: str) -> dict:
+    return {
         "slug": slug, "url": url, "name": None,
         "release_date": None, "release_date_raw": None,
         "image": None, "set_slug": None, "set_guessed": None,
@@ -93,22 +96,40 @@ def fetch_product_page(slug: str) -> dict:
         "fetched_at": datetime.datetime.now(datetime.timezone.utc)
                                  .isoformat(timespec="seconds"),
     }
+
+
+def fetch_product_page(browser, slug: str) -> dict:
+    url = GALLERY_BASE + slug
+    record = _new_record(slug, url)
+    page = browser.new_page(user_agent=UA)
     try:
-        r = requests.get(url, headers=HEADERS, timeout=25)
-    except requests.RequestException as e:
+        html = ""
+        for wait_ms in (PAGE_WAIT_MS, RETRY_WAIT_MS):
+            page.goto(url, wait_until="domcontentloaded", timeout=45_000)
+            page.wait_for_timeout(wait_ms)
+            html = page.content()
+            if len(html) >= MIN_HTML_LEN:
+                break
+            print(f"  {slug}: thin response ({len(html)} bytes) after "
+                  f"{wait_ms}ms wait, retrying once" if wait_ms == PAGE_WAIT_MS else
+                  f"  {slug}: still thin after retry, giving up")
+    except Exception as e:  # noqa: BLE001
         record["error"] = type(e).__name__
+        page.close()
         return record
-    if r.status_code != 200:
-        record["error"] = f"HTTP {r.status_code}"
-        return record
-    if looks_blocked(r.text):
+    page.close()
+
+    if looks_blocked(html):
         record["blocked"] = True
         return record
+    if len(html) < MIN_HTML_LEN:
+        record["error"] = f"thin response ({len(html)} bytes)"
+        return record
 
-    products = extract_jsonld_products(r.text)
-    record["name"] = extract_name(r.text, products)
-    record["release_date"], record["release_date_raw"] = extract_release_date(r.text, products)
-    record["image"] = extract_image(r.text, products)
+    products = extract_jsonld_products(html)
+    record["name"] = extract_name(html, products)
+    record["release_date"], record["release_date_raw"] = extract_release_date(html, products)
+    record["image"] = extract_image(html, products)
     record["set_slug"], record["set_guessed"] = derive_set_slug(slug)
     return record
 
@@ -150,17 +171,21 @@ def main() -> int:
 
     all_slugs = sorted(seed_slugs | set(discovered))[:MAX_PRODUCT_PAGES]
     print(f"scanning {len(all_slugs)} product page(s) total "
-          f"({len(discovered)} from sitemap, {len(seed_slugs)} seeded)")
+          f"({len(discovered)} discovered via sitemap, {len(seed_slugs)} seeded, "
+          f"capped at {MAX_PRODUCT_PAGES} per run)")
 
     records = []
-    for i, slug in enumerate(all_slugs):
-        rec = fetch_product_page(slug)
-        flag = " BLOCKED" if rec["blocked"] else (f" error={rec['error']}" if rec["error"] else "")
-        print(f"  [{i + 1}/{len(all_slugs)}] {slug}: "
-              f"release={rec['release_date'] or rec['release_date_raw'] or '?'}, "
-              f"set={rec['set_slug']}{' (guessed)' if rec['set_guessed'] else ''}{flag}")
-        records.append(rec)
-        time.sleep(REQUEST_DELAY_SEC)
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch()
+        for i, slug in enumerate(all_slugs):
+            rec = fetch_product_page(browser, slug)
+            flag = (" BLOCKED" if rec["blocked"]
+                    else f" error={rec['error']}" if rec["error"] else "")
+            print(f"  [{i + 1}/{len(all_slugs)}] {slug}: "
+                  f"release={rec['release_date'] or rec['release_date_raw'] or '?'}, "
+                  f"set={rec['set_slug']}{' (guessed)' if rec['set_guessed'] else ''}{flag}")
+            records.append(rec)
+        browser.close()
 
     check_169_theory(records)
 

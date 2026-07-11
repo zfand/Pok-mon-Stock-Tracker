@@ -14,14 +14,21 @@ MONTH_DATE_RE = re.compile(
 )
 RELEASE_KEYWORDS_RE = re.compile(r'(release|available|in stores|on sale)', re.IGNORECASE)
 
+# Deliberately specific, not generic terms like "captcha" or "access
+# denied" — those show up incidentally in normal pages' cookie-consent and
+# reCAPTCHA boilerplate (confirmed: a real, successfully-rendered 160KB
+# product page tripped a looser version of this list on that noise alone).
 BLOCK_MARKERS = (
     "administrators have been notified",
     "are you a human",
-    "captcha",
-    "access denied",
-    "request unsuccessful",
     "pardon our interruption",
+    "request unsuccessful",
 )
+# A genuine challenge/compliance page has been short every time we've seen
+# one; a real product page is not. Require both signals together so
+# boilerplate mentioning one of the phrases deep in a large real page can't
+# misclassify it.
+BLOCKED_PAGE_MAX_LEN = 20_000
 
 # Longest/most specific patterns first, so e.g. the Ultra-Premium
 # Collection's "-ultra-premium-collections-day-night" suffix strips as a
@@ -40,7 +47,9 @@ PRODUCT_SUFFIX_PATTERNS = [
 
 
 def looks_blocked(html: str) -> bool:
-    snippet = html[:4000].lower()
+    if len(html) >= BLOCKED_PAGE_MAX_LEN:
+        return False
+    snippet = html.lower()
     return any(m in snippet for m in BLOCK_MARKERS)
 
 

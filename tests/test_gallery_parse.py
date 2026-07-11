@@ -125,6 +125,20 @@ def test_looks_blocked_false_for_normal_page():
     assert not looks_blocked("<html>Elite Trainer Box product details</html>")
 
 
+def test_looks_blocked_false_for_large_real_page_with_incidental_boilerplate():
+    # Regression: a real, fully-rendered 160KB product page tripped the
+    # detector purely because its cookie-consent/reCAPTCHA scripts happen
+    # to mention "captcha" — length must gate the marker check.
+    html = ("<html>reCAPTCHA widget script mentions captcha handling here. "
+            + "Elite Trainer Box $59.99. " * 2000 + "</html>")
+    assert len(html) > 20_000
+    assert not looks_blocked(html)
+
+
+def test_looks_blocked_true_for_short_genuine_challenge_page():
+    assert looks_blocked("Pardon our interruption while we verify you're not a robot.")
+
+
 # --- sitemap helpers -----------------------------------------------------------
 
 def test_parse_sitemap_locs():
