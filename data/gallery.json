@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-11T19:42:49+00:00",
-  "next_scan_offset": 10,
+  "generated_at": "2026-07-12T10:07:13+00:00",
+  "next_scan_offset": 13,
   "products": [
     {
       "slug": "30th-celebration-elite-trainer-box",
@@ -14,6 +14,19 @@
       "blocked": false,
       "error": null,
       "fetched_at": "2026-07-11T19:38:38+00:00"
+    },
+    {
+      "slug": "30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex",
+      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex",
+      "name": "Pok\u00e9mon&amp;nbsp;TCG: 30th Celebration Battle Deck\u2014Espeon&amp;nbsp;ex and 30th Celebration Battle Deck\u2014Umbreon&amp;nbsp;ex",
+      "release_date": "2026-10-30",
+      "release_date_raw": "October 30, 2026",
+      "image": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-battle-deck-espeon-ex-umbreon-ex/30th-celebration-battle-deck-espeon-ex-umbreon-ex-169-en.png",
+      "set_slug": "30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex",
+      "set_guessed": true,
+      "blocked": false,
+      "error": null,
+      "fetched_at": "2026-07-12T10:03:15+00:00"
     },
     {
       "slug": "2013",
@@ -156,7 +169,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:18:10+00:00"
+      "fetched_at": "2026-07-12T10:06:21+00:00"
     },
     {
       "slug": "2019",
@@ -169,7 +182,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:18:20+00:00"
+      "fetched_at": "2026-07-12T10:06:39+00:00"
     },
     {
       "slug": "2019-pokemon-tcg-world-championships-deck",
@@ -182,7 +195,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:18:29+00:00"
+      "fetched_at": "2026-07-12T10:07:03+00:00"
     },
     {
       "slug": "2020",
@@ -315,19 +328,6 @@
       "fetched_at": "2026-07-11T19:20:06+00:00"
     },
     {
-      "slug": "30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex",
-      "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/30th-celebration-battle-deck-espeon-ex-and-30th-celebration-battle-deck-umbreon-ex",
-      "name": null,
-      "release_date": null,
-      "release_date_raw": null,
-      "image": null,
-      "set_slug": null,
-      "set_guessed": null,
-      "blocked": true,
-      "error": null,
-      "fetched_at": "2026-07-11T19:20:15+00:00"
-    },
-    {
       "slug": "30th-celebration-binder-collection",
       "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/30th-celebration-binder-collection",
       "name": null,
@@ -338,7 +338,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:20:25+00:00"
+      "fetched_at": "2026-07-12T10:03:33+00:00"
     },
     {
       "slug": "30th-celebration-figure-collection",
@@ -351,7 +351,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:20:44+00:00"
+      "fetched_at": "2026-07-12T10:04:18+00:00"
     },
     {
       "slug": "30th-celebration-pokemon-center-elite-trainer-box",
@@ -364,7 +364,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:20:54+00:00"
+      "fetched_at": "2026-07-12T10:04:42+00:00"
     },
     {
       "slug": "30th-celebration-poster-collection",
@@ -377,7 +377,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:21:03+00:00"
+      "fetched_at": "2026-07-12T10:05:01+00:00"
     },
     {
       "slug": "30th-celebration-sylveon-ex-box-and-greninja-ex-box",
@@ -390,7 +390,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:21:13+00:00"
+      "fetched_at": "2026-07-12T10:05:24+00:00"
     },
     {
       "slug": "30th-celebration-tech-sticker-collection",
@@ -403,7 +403,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:21:22+00:00"
+      "fetched_at": "2026-07-12T10:05:45+00:00"
     },
     {
       "slug": "30th-celebration-ultra-premium-collections-day-night",
@@ -416,7 +416,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:38:56+00:00"
+      "fetched_at": "2026-07-12T10:06:03+00:00"
     },
     {
       "slug": "alakazam-v-box",
