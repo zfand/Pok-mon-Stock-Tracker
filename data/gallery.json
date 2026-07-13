@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-12T10:07:13+00:00",
-  "next_scan_offset": 13,
+  "generated_at": "2026-07-13T11:32:43+00:00",
+  "next_scan_offset": 16,
   "products": [
     {
       "slug": "30th-celebration-elite-trainer-box",
@@ -26,7 +26,7 @@
       "set_guessed": true,
       "blocked": false,
       "error": null,
-      "fetched_at": "2026-07-12T10:03:15+00:00"
+      "fetched_at": "2026-07-13T11:28:39+00:00"
     },
     {
       "slug": "2013",
@@ -208,7 +208,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:18:39+00:00"
+      "fetched_at": "2026-07-13T11:31:50+00:00"
     },
     {
       "slug": "2021",
@@ -221,7 +221,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:18:49+00:00"
+      "fetched_at": "2026-07-13T11:32:10+00:00"
     },
     {
       "slug": "2022",
@@ -234,7 +234,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-11T19:18:58+00:00"
+      "fetched_at": "2026-07-13T11:32:33+00:00"
     },
     {
       "slug": "2022-pokemon-tcg-world-championships-decks",
@@ -338,7 +338,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-12T10:03:33+00:00"
+      "fetched_at": "2026-07-13T11:28:59+00:00"
     },
     {
       "slug": "30th-celebration-figure-collection",
@@ -351,7 +351,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-12T10:04:18+00:00"
+      "fetched_at": "2026-07-13T11:29:38+00:00"
     },
     {
       "slug": "30th-celebration-pokemon-center-elite-trainer-box",
@@ -364,7 +364,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-12T10:04:42+00:00"
+      "fetched_at": "2026-07-13T11:30:01+00:00"
     },
     {
       "slug": "30th-celebration-poster-collection",
@@ -377,7 +377,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-12T10:05:01+00:00"
+      "fetched_at": "2026-07-13T11:30:26+00:00"
     },
     {
       "slug": "30th-celebration-sylveon-ex-box-and-greninja-ex-box",
@@ -390,7 +390,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-12T10:05:24+00:00"
+      "fetched_at": "2026-07-13T11:30:49+00:00"
     },
     {
       "slug": "30th-celebration-tech-sticker-collection",
@@ -403,7 +403,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-12T10:05:45+00:00"
+      "fetched_at": "2026-07-13T11:31:09+00:00"
     },
     {
       "slug": "30th-celebration-ultra-premium-collections-day-night",
@@ -416,7 +416,7 @@
       "set_guessed": null,
       "blocked": true,
       "error": null,
-      "fetched_at": "2026-07-12T10:06:03+00:00"
+      "fetched_at": "2026-07-13T11:31:27+00:00"
     },
     {
       "slug": "alakazam-v-box",
