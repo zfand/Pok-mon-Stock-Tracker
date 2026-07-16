@@ -1,10 +1,8 @@
 name: Scan product gallery
 
 on:
-  schedule:
-    # Once a day — release dates and product images don't change minute to
-    # minute, unlike stock (see check-stock.yml for that cron).
-    - cron: "17 8 * * *"
+  # Cron trigger disabled — no automatic gallery scans run. Trigger manually
+  # via workflow_dispatch (Actions tab → Run workflow) until re-enabled.
   workflow_dispatch: {}
 
 permissions:

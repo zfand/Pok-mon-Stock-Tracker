@@ -1,10 +1,8 @@
 name: Check stock
 
 on:
-  schedule:
-    # Every 10 minutes. GitHub cron is best-effort — actual cadence is often
-    # 10–20 min, and busy periods can delay runs further.
-    - cron: "*/10 * * * *"
+  # Cron trigger disabled — no automatic stock checks run. Trigger manually
+  # via workflow_dispatch (Actions tab → Run workflow) until re-enabled.
   workflow_dispatch:
     inputs:
       test_notification:
